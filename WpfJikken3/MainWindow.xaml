@@ -1,0 +1,71 @@
+﻿<Window
+    x:Class="WpfJikken3.MainWindow"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:b="http://schemas.microsoft.com/xaml/behaviors"
+    xmlns:local="clr-namespace:WpfJikken3"
+    xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+    Title="{Binding Title}"
+    Width="800"
+    Height="450"
+    Background="{DynamicResource MaterialDesignPaper}"
+    FontFamily="{materialDesign:MaterialDesignFont}"
+    Style="{StaticResource MaterialDesignWindow}"
+    TextElement.Foreground="{DynamicResource MaterialDesignBody}"
+    WindowStartupLocation="CenterScreen">
+    <b:Interaction.Behaviors>
+        <local:WindowKeyBindingBehavior />
+    </b:Interaction.Behaviors>
+    <DockPanel>
+        <materialDesign:ColorZone
+            Padding="16"
+            DockPanel.Dock="Top"
+            Mode="PrimaryMid">
+            <DockPanel>
+                <materialDesign:PopupBox DockPanel.Dock="Right" PlacementMode="BottomAndAlignRightEdges">
+                    <StackPanel>
+                        <MenuItem
+                            Command="{x:Static local:WindowCommands.Close}"
+                            CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=Window}}"
+                            Header="終了">
+                            <MenuItem.Icon>
+                                <materialDesign:PackIcon Kind="ExitToApp" />
+                            </MenuItem.Icon>
+                        </MenuItem>
+                    </StackPanel>
+                </materialDesign:PopupBox>
+                <TextBlock
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Center"
+                    Style="{StaticResource MaterialDesignTitleLargeTextBlock}"
+                    Text="メイン画面" />
+            </DockPanel>
+        </materialDesign:ColorZone>
+
+        <TabControl Margin="5">
+            <TabItem Header="機能1">
+                <ItemsControl Margin="5" ItemsSource="{Binding Buttons}">
+                    <ItemsControl.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <WrapPanel Orientation="Horizontal" />
+                        </ItemsPanelTemplate>
+                    </ItemsControl.ItemsPanel>
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <Button
+                                Width="160"
+                                Height="80"
+                                Margin="10"
+                                Command="{Binding DataContext.OpenSubWindowCommand, RelativeSource={RelativeSource AncestorType=Window}}"
+                                CommandParameter="{Binding Title}"
+                                Content="{Binding Title}" />
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+            </TabItem>
+            <TabItem Header="機能2">
+                <TextBlock Margin="10" Text="機能2の画面です" />
+            </TabItem>
+        </TabControl>
+    </DockPanel>
+</Window>
