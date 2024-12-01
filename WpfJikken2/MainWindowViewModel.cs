@@ -1,13 +1,14 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using System.Collections.ObjectModel;
-using System.Windows;
+using WpfJikken2.Base;
+using WpfJikken2.DataObject;
 
 namespace WpfJikken2
 {
     public partial class MainWindowViewModel : ObservableObject
     {
-        private Window mainWindow;
+        private BaseWindow mainWindow;
 
         [ObservableProperty]
         private string title = "メイン画面";
@@ -15,7 +16,7 @@ namespace WpfJikken2
         [ObservableProperty]
         public ObservableCollection<ButtonInfo> buttons;
 
-        public MainWindowViewModel(Window window)
+        public MainWindowViewModel(BaseWindow window)
         {
             mainWindow = window;
 
@@ -30,16 +31,11 @@ namespace WpfJikken2
         [RelayCommand]
         private void OpenSubWindow(string title)
         {
-            var window = new SubWindow();
-
-            window.Owner = mainWindow;
-            window.DataContext = new SubWindowViewModel(title);
-            window.Show();
+            var subWindow = new SubWindow();
+            subWindow.Owner = mainWindow;
+            subWindow.ThemeAndColor = mainWindow.ThemeAndColor;
+            subWindow.DataContext = new SubWindowViewModel(title);
+            subWindow.Show();
         }
-    }
-
-    public class ButtonInfo
-    {
-        public required string Title { get; set; }
     }
 }

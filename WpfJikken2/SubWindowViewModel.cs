@@ -1,5 +1,6 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using System.Collections.ObjectModel;
+using WpfJikken2.DataObject;
 
 namespace WpfJikken2
 {
@@ -12,7 +13,7 @@ namespace WpfJikken2
         private string description = "ここに説明文を記載します。\n複数行の説明文を記載できます。";
 
         [ObservableProperty]
-        private ObservableCollection<DataObject> gridItems;
+        private ObservableCollection<Sample> gridItems;
 
         [ObservableProperty]
         public ObservableCollection<string> comboBoxItems;
@@ -35,13 +36,5 @@ namespace WpfJikken2
                 new() { Name = "項目3", Text = "テキスト3", IsSelected = true, Type = "キメラのつばさ" }
             ];
         }
-    }
-
-    public class DataObject
-    {
-        public required string Name { get; set; }
-        public required string Text { get; set; }
-        public bool IsSelected { get; set; }
-        public required string Type { get; set; }
     }
 }

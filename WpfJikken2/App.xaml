@@ -9,6 +9,8 @@
                 <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Controls.xaml" />
                 <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Fonts.xaml" />
                 <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Themes/Light.Crimson.xaml" />
+                <ResourceDictionary Source="/Base/ThemeAndColor/Resource/ColorResource.xaml" />
+                <ResourceDictionary Source="/Base/ThemeAndColor/Resource/ThemeResource.xaml" />
             </ResourceDictionary.MergedDictionaries>
 
             <Style BasedOn="{StaticResource MahApps.Styles.Button}" TargetType="Button">
