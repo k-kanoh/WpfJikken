@@ -1,8 +1,8 @@
-﻿using MahApps.Metro.Controls;
+﻿using WpfJikken2.Base;
 
 namespace WpfJikken2
 {
-    public partial class SubWindow : MetroWindow
+    public partial class SubWindow : BaseWindow
     {
         public SubWindow()
         {
