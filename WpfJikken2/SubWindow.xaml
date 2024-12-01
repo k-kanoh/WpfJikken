@@ -20,6 +20,10 @@
                     CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=Window}}"
                     Header="閉じる" />
             </MenuItem>
+            <MenuItem
+                Header="カラー"
+                ItemContainerStyle="{StaticResource AccentColorMenuItemStyle}"
+                ItemsSource="{Binding AccentColors}" />
         </Menu>
 
         <Grid>

@@ -20,6 +20,10 @@
                     CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=Window}}"
                     Header="終了" />
             </MenuItem>
+            <MenuItem
+                Header="カラー"
+                ItemContainerStyle="{StaticResource AccentColorMenuItemStyle}"
+                ItemsSource="{Binding AccentColors}" />
         </Menu>
 
         <TabControl Grid.Row="1" Margin="5">

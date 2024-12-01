@@ -2,10 +2,11 @@
 using CommunityToolkit.Mvvm.Input;
 using System.Collections.ObjectModel;
 using System.Windows;
+using WpfJikken2.Base;
 
 namespace WpfJikken2
 {
-    public partial class MainWindowViewModel : ObservableObject
+    public partial class MainWindowViewModel : BaseWindowViewModel
     {
         private Window mainWindow;
 
@@ -31,9 +32,11 @@ namespace WpfJikken2
         private void OpenSubWindow(string title)
         {
             var window = new SubWindow();
+            var vm = new SubWindowViewModel(title);
+            window.DataContext = vm;
+            vm.AccentColors.First(x => x.Name == CurrentAccentColor).ChangeAccentCommand.Execute(CurrentAccentColor);
 
             window.Owner = mainWindow;
-            window.DataContext = new SubWindowViewModel(title);
             window.Show();
         }
     }

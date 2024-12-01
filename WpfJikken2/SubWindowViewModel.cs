@@ -1,9 +1,10 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using System.Collections.ObjectModel;
+using WpfJikken2.Base;
 
 namespace WpfJikken2
 {
-    public partial class SubWindowViewModel : ObservableObject
+    public partial class SubWindowViewModel : BaseWindowViewModel
     {
         [ObservableProperty]
         private string title;
