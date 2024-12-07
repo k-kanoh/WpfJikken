@@ -1,4 +1,7 @@
-﻿using WpfJikken2.Base;
+﻿using System.Windows;
+using System.Windows.Controls;
+using WpfJikken2.Base;
+using WpfJikken2.DataObject;
 
 namespace WpfJikken2
 {
@@ -8,6 +11,16 @@ namespace WpfJikken2
         {
             InitializeComponent();
             DataContext = new MainWindowViewModel(this);
+        }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            if (sender is Button button && button.DataContext is ButtonInfo info)
+            {
+                var subWindow = new SubWindow() { ParentWindow = this };
+                subWindow.DataContext = new SubWindowViewModel(info.Title);
+                subWindow.Show();
+            }
         }
     }
 }
