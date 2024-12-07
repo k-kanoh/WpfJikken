@@ -5,7 +5,7 @@ using WpfJikken2.Base.ThemeAndColor;
 
 namespace WpfJikken2.Base
 {
-    public class BaseWindow : MetroWindow
+    public partial class BaseWindow : MetroWindow
     {
         public ThemeItems Themes { get; } = new ThemeItems();
 
@@ -26,7 +26,7 @@ namespace WpfJikken2.Base
             Colors.CurrentColor = color;
         }
 
-        public string ThemeAndColor
+        private string ThemeAndColor
         {
             get
             {

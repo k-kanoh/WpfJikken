@@ -44,8 +44,7 @@
                                 Width="160"
                                 Height="80"
                                 Margin="10"
-                                Command="{Binding DataContext.OpenSubWindowCommand, RelativeSource={RelativeSource AncestorType=Window}}"
-                                CommandParameter="{Binding Title}"
+                                Click="Button_Click"
                                 Content="{Binding Title}" />
                         </DataTemplate>
                     </ItemsControl.ItemTemplate>
