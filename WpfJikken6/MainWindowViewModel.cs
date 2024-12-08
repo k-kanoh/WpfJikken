@@ -1,7 +1,7 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
-using CommunityToolkit.Mvvm.Input;
 using System.Collections.ObjectModel;
 using System.Windows;
+using WpfJikken6.DataObject;
 
 namespace WpfJikken6
 {
@@ -26,20 +26,5 @@ namespace WpfJikken6
                 new() { Title = "サブ画面3" }
             ];
         }
-
-        [RelayCommand]
-        private void OpenSubWindow(string title)
-        {
-            var window = new SubWindow();
-
-            window.Owner = mainWindow;
-            window.DataContext = new SubWindowViewModel(title);
-            window.Show();
-        }
-    }
-
-    public class ButtonInfo
-    {
-        public required string Title { get; set; }
     }
 }
