@@ -1,6 +1,6 @@
-﻿namespace WpfJikken6.DataObject
+﻿namespace WpfJikken6.Model
 {
-    public class GridInfo
+    public class GridInfoModel
     {
         /// <summary>
         /// アドレス
@@ -60,7 +60,7 @@
         /// <summary>
         /// Constructor
         /// </summary>
-        public GridInfo(int next)
+        public GridInfoModel(int next)
         {
             Next = next;
         }
