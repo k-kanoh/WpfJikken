@@ -1,8 +1,8 @@
-﻿using System.Windows;
+﻿using WpfJikken6.Base;
 
 namespace WpfJikken6
 {
-    public partial class SubWindow : Window
+    public partial class SubWindow : BaseWindow
     {
         public SubWindow()
         {
