@@ -15,12 +15,12 @@
         /// <summary>
         /// サイズ(Byte)
         /// </summary>
-        public int Size { get; init; } = 1;
+        public int Size { get; init; }
 
         /// <summary>
         /// フィルタ(Bit)
         /// </summary>
-        public string Filter { get; init; } = "11111111";
+        public string Filter { get; init; }
 
         /// <summary>
         /// 間隔
@@ -35,22 +35,22 @@
         /// <summary>
         /// 最小値
         /// </summary>
-        public string Min { get; set; } = null!;
+        public string Min { get; set; }
 
         /// <summary>
         /// 最大値
         /// </summary>
-        public string Max { get; set; } = null!;
+        public string Max { get; set; }
 
         /// <summary>
         /// 項目のマスタ
         /// </summary>
-        public string? Master { get; init; }
+        public string Master { get; set; }
 
         /// <summary>
         /// 複数Byteに跨る場合の順番
         /// </summary>
-        public int? Index { get; init; }
+        public int Index { get; set; }
 
         /// <summary>
         /// メモ
