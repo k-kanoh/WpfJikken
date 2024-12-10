@@ -6,11 +6,11 @@ namespace WpfJikken6.Service
 {
     public class DQ3MonsterParams : IReadOnlyList<GridInfoModel>
     {
-        private readonly List<GridInfoModel> _list;
+        private readonly List<GridInfoModel> _items;
 
-        private DQ3MonsterParams(List<GridInfoModel> list)
+        private DQ3MonsterParams(GridInfoModels models)
         {
-            _list = list;
+            _items = models.ToList();
         }
 
         public static DQ3MonsterParams CreateGridData()
@@ -33,10 +33,14 @@ namespace WpfJikken6.Service
                 new GridInfo(17) { Address = "3317", Caption = "行動6", Filter = "01111111", Master = "MonsterAction" },
                 new GridInfo(17) { Address = "3318", Caption = "行動7", Filter = "01111111", Master = "MonsterAction" },
                 new GridInfo(17) { Address = "3319", Caption = "行動8", Filter = "01111111", Master = "MonsterAction" },
-                new GridInfo(17) { Address = "3312", Caption = "AI", Filter = "1000000010000000", Master = "判断なし|ターン毎|臨機応変" },
-                new GridInfo(17) { Address = "3314", Caption = "タイプ", Filter = "1000000010000000", Master = "同率|→18%|8優先|循環" },
-                new GridInfo(17) { Address = "3316", Caption = "行動回数", Filter = "1000000010000000", Master = "1回(100%)|2回(50%)|3回(25%)|2回(100%)" },
-                new GridInfo(17) { Address = "3318", Caption = "自動回復", Filter = "1000000010000000", Master = "0|16～23|44～55|90～109" },
+                new GridInfo(17) { Address = "3312", Caption = "AI", Filter = "10000000", Index = 2, Master = "判断なし|ターン毎|臨機応変" },
+                new GridInfo(17) { Address = "3313", Caption = "AI", Filter = "10000000", Index = 1, Disp = EnmDisp.None },
+                new GridInfo(17) { Address = "3314", Caption = "タイプ", Filter = "10000000", Index = 2, Master = "同率|→18%|8優先|循環" },
+                new GridInfo(17) { Address = "3315", Caption = "タイプ", Filter = "10000000", Index = 1, Disp = EnmDisp.None },
+                new GridInfo(17) { Address = "3316", Caption = "行動回数", Filter = "10000000", Index = 2, Master = "1回(100%)|2回(50%)|3回(25%)|2回(100%)" },
+                new GridInfo(17) { Address = "3317", Caption = "行動回数", Filter = "10000000", Index = 1, Disp = EnmDisp.None },
+                new GridInfo(17) { Address = "3318", Caption = "自動回復", Filter = "10000000", Index = 2, Master = "0|16～23|44～55|90～109" },
+                new GridInfo(17) { Address = "3319", Caption = "自動回復", Filter = "10000000", Index = 1, Disp = EnmDisp.None },
                 new GridInfo(17) { Address = "3311", Caption = "集中", Filter = "10000000" },
                 new GridInfo(17) { Address = "331A", Caption = "炎系", Filter = "11000000", Master = "100%|70%|30%|0%" },
                 new GridInfo(17) { Address = "331A", Caption = "ﾋｬﾄﾞ系", Filter = "00110000", Master = "100%|70%|30%|0%" },
@@ -44,18 +48,18 @@ namespace WpfJikken6.Service
                 new GridInfo(17) { Address = "331A", Caption = "Gold", Filter = "00000011", Index = 1, Disp = EnmDisp.None },
             };
 
-            return new DQ3MonsterParams(list);
+            return new DQ3MonsterParams(list.ToGridInfos().ToModels());
         }
 
         #region Interface Members
 
-        public GridInfoModel this[int index] => _list[index];
+        public GridInfoModel this[int index] => _items[index];
 
-        public int Count => _list.Count;
+        public int Count => _items.Count;
 
-        public IEnumerator<GridInfoModel> GetEnumerator() => _list.GetEnumerator();
+        public IEnumerator<GridInfoModel> GetEnumerator() => _items.GetEnumerator();
 
-        IEnumerator IEnumerable.GetEnumerator() => _list.GetEnumerator();
+        IEnumerator IEnumerable.GetEnumerator() => _items.GetEnumerator();
 
         #endregion Interface Members
     }

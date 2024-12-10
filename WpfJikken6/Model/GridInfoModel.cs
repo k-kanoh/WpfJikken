@@ -5,32 +5,32 @@
         /// <summary>
         /// アドレス
         /// </summary>
-        public required string Address { get; init; }
+        public required string Address { get; set; }
 
         /// <summary>
         /// 名前 (Index設定時のキーも兼ねる)
         /// </summary>
-        public required string Caption { get; init; }
+        public required string Caption { get; set; }
 
         /// <summary>
         /// サイズ(Byte)
         /// </summary>
-        public int Size { get; init; } = 1;
+        public int Size { get; set; }
 
         /// <summary>
         /// フィルタ(Bit)
         /// </summary>
-        public string Filter { get; init; } = "11111111";
+        public string Filter { get; set; } = null!;
 
         /// <summary>
         /// 間隔
         /// </summary>
-        public int Next { get; init; }
+        public int Next { get; set; }
 
         /// <summary>
         /// 表示方法
         /// </summary>
-        public EnmDisp Disp { get; init; } = EnmDisp.Dec;
+        public EnmDisp Disp { get; set; }
 
         /// <summary>
         /// 最小値
@@ -45,24 +45,16 @@
         /// <summary>
         /// 項目のマスタ
         /// </summary>
-        public string? Master { get; init; }
+        public string? Master { get; set; }
 
         /// <summary>
         /// 複数Byteに跨る場合の順番
         /// </summary>
-        public int? Index { get; init; }
+        public int Index { get; set; }
 
         /// <summary>
         /// メモ
         /// </summary>
         public string? Memo { get; set; }
-
-        /// <summary>
-        /// Constructor
-        /// </summary>
-        public GridInfoModel(int next)
-        {
-            Next = next;
-        }
     }
 }

@@ -3,9 +3,9 @@ using WpfJikken6.Model;
 
 namespace WpfJikken6.DataObject
 {
-    public class GridInfos : IReadOnlyList<GridInfo>
+    public class GridInfos(List<GridInfo> items) : IReadOnlyList<GridInfo>
     {
-        private readonly List<GridInfo> _items;
+        private readonly List<GridInfo> _items = items;
 
         public GridInfoModels ToModels()
         {
@@ -13,6 +13,9 @@ namespace WpfJikken6.DataObject
 
             foreach (var item in _items)
             {
+                var model = new GridInfoModel() { Address = item.Address, Caption = item.Caption };
+
+                Util.ShallowCopy(item, model);
             }
 
             return new GridInfoModels(models);
@@ -29,5 +32,13 @@ namespace WpfJikken6.DataObject
         IEnumerator IEnumerable.GetEnumerator() => _items.GetEnumerator();
 
         #endregion Interface Members
+    }
+
+    public static class GridInfosExtension
+    {
+        public static GridInfos ToGridInfos(this List<GridInfo> list)
+        {
+            return new GridInfos(list);
+        }
     }
 }

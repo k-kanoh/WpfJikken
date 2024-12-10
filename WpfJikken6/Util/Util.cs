@@ -3,7 +3,7 @@
     public static class Util
     {
         /// <summary>
-        /// オブジェクトを比較しプロパティをシャローコピーします。
+        /// オブジェクトを比較しプロパティをシャローコピーします。(requiredはコピー対象外)
         /// </summary>
         public static void ShallowCopy(object sourceObj, object destObj)
         {
@@ -13,7 +13,7 @@
                               select new { source, dest };
 
             foreach (var pair in joinedProps)
-                if (pair.dest.CanWrite && pair.source.CanRead)
+                if (pair.dest.CanWrite && pair.source.CanRead && !pair.dest.IsRequired())
                     pair.dest.SetValue(destObj, pair.source.GetValue(sourceObj));
         }
     }

@@ -2,6 +2,7 @@
 using System.Collections.ObjectModel;
 using System.Windows;
 using WpfJikken6.DataObject;
+using WpfJikken6.Service;
 
 namespace WpfJikken6
 {
@@ -25,6 +26,8 @@ namespace WpfJikken6
                 new() { Title = "サブ画面2" },
                 new() { Title = "サブ画面3" }
             ];
+
+            var aaaaa = DQ3MonsterParams.CreateGridData();
         }
     }
 }

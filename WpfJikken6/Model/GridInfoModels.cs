@@ -2,14 +2,9 @@
 
 namespace WpfJikken6.Model
 {
-    public class GridInfoModels : IReadOnlyList<GridInfoModel>
+    public class GridInfoModels(List<GridInfoModel> items) : IReadOnlyList<GridInfoModel>
     {
-        private readonly List<GridInfoModel> _items;
-
-        public GridInfoModels(List<GridInfoModel> dataObjects)
-        {
-            _items = dataObjects;
-        }
+        private readonly List<GridInfoModel> _items = items;
 
         #region Interface Members
 
@@ -22,5 +17,13 @@ namespace WpfJikken6.Model
         IEnumerator IEnumerable.GetEnumerator() => _items.GetEnumerator();
 
         #endregion Interface Members
+    }
+
+    public static class GridInfoModelsExtension
+    {
+        public static GridInfoModels ToGridInfos(this List<GridInfoModel> list)
+        {
+            return new GridInfoModels(list);
+        }
     }
 }
