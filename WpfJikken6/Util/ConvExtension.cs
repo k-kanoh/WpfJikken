@@ -25,17 +25,33 @@ namespace WpfJikken6
         /// <summary>
         /// Hex -> byteArray
         /// </summary>
-        public static byte[] HexToByteArray(this string value)
+        public static byte[] HexToByteArrayBigEndian(this string value)
         {
             if (value.Length % 2 == 1)
                 value = "0" + value;
 
-            var bytes = new byte[value.Length / 2];
-
             var span = value.AsSpan();
+            var bytes = new byte[value.Length / 2];
 
             for (int i = 0; i < bytes.Length; i++)
                 bytes[i] = byte.Parse(span.Slice(i * 2, 2), NumberStyles.HexNumber);
+
+            return bytes;
+        }
+
+        /// <summary>
+        /// Hex -> byteArray
+        /// </summary>
+        public static byte[] HexToByteArrayLittleEndian(this string value)
+        {
+            if (value.Length % 2 == 1)
+                value = "0" + value;
+
+            var span = value.AsSpan();
+            var bytes = new byte[value.Length / 2];
+
+            for (int i = 0; i < bytes.Length; i++)
+                bytes[bytes.Length - i - 1] = byte.Parse(span.Slice(i * 2, 2), NumberStyles.HexNumber);
 
             return bytes;
         }
