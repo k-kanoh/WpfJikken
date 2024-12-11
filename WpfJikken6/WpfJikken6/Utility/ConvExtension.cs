@@ -1,4 +1,5 @@
 ﻿using System.Globalization;
+using System.Text;
 
 namespace WpfJikken6
 {
@@ -9,9 +10,19 @@ namespace WpfJikken6
         /// <summary>
         /// Hex -> int
         /// </summary>
-        public static int HexToInt(this string value)
+        public static int HexToIntBigEndian(this string value)
         {
             return int.Parse(value.AsSpan(), NumberStyles.HexNumber);
+        }
+
+        /// <summary>
+        /// Hex -> int
+        /// </summary>
+        public static int HexToIntLittleEndian(this string value)
+        {
+            var bytes = value.HexToByteArray();
+            Array.Reverse(bytes);
+            return BitConverter.ToInt32(bytes, 0);
         }
 
         /// <summary>
@@ -25,7 +36,7 @@ namespace WpfJikken6
         /// <summary>
         /// Hex -> byteArray
         /// </summary>
-        public static byte[] HexToByteArrayBigEndian(this string value)
+        public static byte[] HexToByteArray(this string value)
         {
             if (value.Length % 2 == 1)
                 value = "0" + value;
@@ -40,28 +51,41 @@ namespace WpfJikken6
         }
 
         /// <summary>
-        /// Hex -> byteArray
+        /// int -> Hex
         /// </summary>
-        public static byte[] HexToByteArrayLittleEndian(this string value)
+        public static string ToHexBigEndian(this int value)
         {
-            if (value.Length % 2 == 1)
-                value = "0" + value;
-
-            var span = value.AsSpan();
-            var bytes = new byte[value.Length / 2];
-
-            for (int i = 0; i < bytes.Length; i++)
-                bytes[bytes.Length - i - 1] = byte.Parse(span.Slice(i * 2, 2), NumberStyles.HexNumber);
-
-            return bytes;
+            return value.ToString("X2");
         }
 
         /// <summary>
         /// int -> Hex
         /// </summary>
-        public static string ToHex(this int value)
+        public static string ToHexLittleEndian(this int value)
         {
-            return value.ToString("X2");
+            var bytes = BitConverter.GetBytes(value);
+            var hex = new StringBuilder(bytes.Length * 2);
+            foreach (byte b in bytes.Reverse())
+            {
+                hex.Append(b.ToString("X2"));
+            }
+            return hex.ToString();
+        }
+
+        /// <summary>
+        /// Bin -> int
+        /// </summary>
+        public static int BinToInt(this string value)
+        {
+            return Convert.ToInt32(value, 2);
+        }
+
+        /// <summary>
+        /// Bin -> byte
+        /// </summary>
+        public static byte BinToByte(this string value)
+        {
+            return Convert.ToByte(value, 2);
         }
 
         /// <summary>
