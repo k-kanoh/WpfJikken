@@ -4,7 +4,7 @@ using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
 
-namespace WpfJikken6
+namespace WpfJikken6.Behavior
 {
     public class DataGridCellOneClickActionBehavior : Behavior<DataGrid>
     {

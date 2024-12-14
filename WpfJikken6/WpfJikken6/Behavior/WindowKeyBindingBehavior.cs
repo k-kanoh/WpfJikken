@@ -2,7 +2,7 @@
 using System.Windows;
 using System.Windows.Input;
 
-namespace WpfJikken6
+namespace WpfJikken6.Behavior
 {
     public class WindowKeyBindingBehavior : Behavior<Window>
     {

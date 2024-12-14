@@ -4,12 +4,13 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:b="http://schemas.microsoft.com/xaml/behaviors"
     xmlns:base="clr-namespace:WpfJikken6.Base"
+    xmlns:behavior="clr-namespace:WpfJikken6.Behavior"
     xmlns:local="clr-namespace:WpfJikken6"
     Title="{Binding Title}"
     Width="800"
     Height="450">
     <b:Interaction.Behaviors>
-        <local:WindowKeyBindingBehavior />
+        <behavior:WindowKeyBindingBehavior />
     </b:Interaction.Behaviors>
     <DockPanel>
         <Menu DockPanel.Dock="Top">
@@ -38,7 +39,7 @@
                 SelectionUnit="FullRow"
                 Style="{StaticResource DataGridBaseStyle}">
                 <b:Interaction.Behaviors>
-                    <local:DataGridCellOneClickActionBehavior />
+                    <behavior:DataGridCellOneClickActionBehavior />
                 </b:Interaction.Behaviors>
                 <DataGrid.Columns>
                     <DataGridTextColumn

@@ -4,13 +4,14 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:b="http://schemas.microsoft.com/xaml/behaviors"
     xmlns:base="clr-namespace:WpfJikken6.Base"
+    xmlns:behavior="clr-namespace:WpfJikken6.Behavior"
     xmlns:local="clr-namespace:WpfJikken6"
     Title="{Binding Title}"
     Width="800"
     Height="450"
     WindowStartupLocation="CenterScreen">
     <b:Interaction.Behaviors>
-        <local:WindowKeyBindingBehavior />
+        <behavior:WindowKeyBindingBehavior />
     </b:Interaction.Behaviors>
     <DockPanel>
         <Menu DockPanel.Dock="Top">
