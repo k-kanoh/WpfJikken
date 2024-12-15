@@ -1,5 +1,6 @@
 ﻿using Csv;
 using WpfJikken6.Utility;
+using WpfJikken6.Utility.Exception;
 
 namespace WpfJikken6
 {
@@ -71,6 +72,15 @@ namespace WpfJikken6
                                              select (string)(p.GetValue(x) ?? "")).ToArray());
 
             return CsvWriter.WriteToText(headers.ToArray(), contents, skipHeaderRow: skipHeaderRow);
+        }
+
+        /// <summary>
+        /// 文字列が8ビットのマスク値として有効か検証します。
+        /// </summary>
+        public static void ThrowIfInvalidMask(string mask)
+        {
+            if (mask.Length != 8 || !mask.All(c => c == '0' || c == '1'))
+                throw new MaskFormatException();
         }
     }
 }

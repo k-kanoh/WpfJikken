@@ -1,11 +1,13 @@
-﻿namespace WpfJikken6.Model
+﻿using WpfJikken6.ValueObject;
+
+namespace WpfJikken6.Model
 {
     public class ParameterDefinitionModel
     {
         /// <summary>
         /// アドレス
         /// </summary>
-        public required string Address { get; set; }
+        public required Hex Address { get; set; }
 
         /// <summary>
         /// 名前 (Index設定時のキーも兼ねる)
@@ -20,7 +22,7 @@
         /// <summary>
         /// マスク
         /// </summary>
-        public string Mask { get; set; } = null!;
+        public BitMask Mask { get; set; } = null!;
 
         /// <summary>
         /// 間隔

@@ -1,4 +1,5 @@
 ﻿using WpfJikken6.Utility;
+using WpfJikken6.ValueObject;
 
 namespace WpfJikken6
 {
@@ -23,7 +24,7 @@ namespace WpfJikken6
         /// <summary>
         /// Byte -> Int
         /// </summary>
-        public static int ToInt(this byte value, string mask = "11111111")
+        public static int ToInt(this byte value, BitMask? mask = null)
         {
             return NumberConverter.ByteToInt(value, mask);
         }
@@ -31,7 +32,7 @@ namespace WpfJikken6
         /// <summary>
         /// Byte -> Hex
         /// </summary>
-        public static string ToHex(this byte value, string mask = "11111111")
+        public static string ToHex(this byte value, BitMask? mask = null)
         {
             return NumberConverter.ByteToHex(value, mask);
         }
@@ -39,7 +40,7 @@ namespace WpfJikken6
         /// <summary>
         /// ByteArray -> Int (Big Endian)
         /// </summary>
-        public static int ToInt(this byte[] values, string[]? masks = null)
+        public static int ToInt(this byte[] values, BitMask[]? masks = null)
         {
             return NumberConverter.ByteArrayToInt(values, masks);
         }

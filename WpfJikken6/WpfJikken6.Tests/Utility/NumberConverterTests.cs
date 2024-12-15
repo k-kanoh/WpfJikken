@@ -1,4 +1,5 @@
 using WpfJikken6.Utility;
+using WpfJikken6.ValueObject;
 
 namespace WpfJikken6.Tests.Utility
 {
@@ -27,8 +28,9 @@ namespace WpfJikken6.Tests.Utility
         [TestCase(0xA5, "11110000", 160)]
         [TestCase(0xFF, "00001111", 15)]
         [TestCase(0xC1, "01111111", 65)]
-        public void ByteToInt_WithMask(byte value, string mask, int expected)
+        public void ByteToInt_WithMask(byte value, string maskPattern, int expected)
         {
+            var mask = new BitMask(maskPattern);
             Assert.That(NumberConverter.ByteToInt(value, mask), Is.EqualTo(expected));
         }
 
@@ -42,8 +44,9 @@ namespace WpfJikken6.Tests.Utility
         [TestCase(0xA5, "11110000", "A0")]
         [TestCase(0xFF, "00001111", "0F")]
         [TestCase(0xC1, "01111111", "41")]
-        public void ByteToHex_WithMask(byte value, string mask, string expected)
+        public void ByteToHex_WithMask(byte value, string maskPattern, string expected)
         {
+            var mask = new BitMask(maskPattern);
             Assert.That(NumberConverter.ByteToHex(value, mask), Is.EqualTo(expected));
         }
 
@@ -61,22 +64,22 @@ namespace WpfJikken6.Tests.Utility
             {
                 {
                     byte[] value = [0x02, 0x82];
-                    string[] masks = ["10000000", "10000000"];
+                    BitMask[] masks = [new("10000000"), new("10000000")];
                     Assert.That(NumberConverter.ByteArrayToInt(value, masks), Is.EqualTo(1));
                 }
                 {
                     byte[] value = [0xCB, 0xE1];
-                    string[] masks = ["11000000", "10000000"];
+                    BitMask[] masks = [new("11000000"), new("10000000")];
                     Assert.That(NumberConverter.ByteArrayToInt(value, masks), Is.EqualTo(7));
                 }
                 {
                     byte[] value = [0xFD, 0x5E];
-                    string[] masks = ["00000011", "11111111"];
+                    BitMask[] masks = [new("00000011"), new("11111111")];
                     Assert.That(NumberConverter.ByteArrayToInt(value, masks), Is.EqualTo(350));
                 }
                 {
                     byte[] value = [0x3F, 0xFF];
-                    string[] masks = ["00000011", "11111111"];
+                    BitMask[] masks = [new("00000011"), new("11111111")];
                     Assert.That(NumberConverter.ByteArrayToInt(value, masks), Is.EqualTo(1023));
                 }
             });
@@ -92,7 +95,7 @@ namespace WpfJikken6.Tests.Utility
         [TestCase(new byte[] { 0xC0, 0x80 }, 7)]
         public void ByteArrayToInt_WithMask_Focused(byte[] values, int expected)
         {
-            Assert.That(NumberConverter.ByteArrayToInt(values, ["11000000", "10000000"]), Is.EqualTo(expected));
+            Assert.That(NumberConverter.ByteArrayToInt(values, [new("11000000"), new("10000000")]), Is.EqualTo(expected));
         }
 
         [TestCase(new byte[] { 0x72, 0x06 }, 1650)]

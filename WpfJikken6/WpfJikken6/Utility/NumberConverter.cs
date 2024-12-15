@@ -1,5 +1,5 @@
 ﻿using System.Globalization;
-using WpfJikken6.Utility.Exception;
+using WpfJikken6.ValueObject;
 
 namespace WpfJikken6.Utility
 {
@@ -24,16 +24,15 @@ namespace WpfJikken6.Utility
         /// <summary>
         /// Byte -> Int
         /// </summary>
-        public static int ByteToInt(byte value, string mask = "11111111")
+        public static int ByteToInt(byte value, BitMask? mask = null)
         {
-            ThrowIfInvalidMask(mask);
-            return value & Convert.ToByte(mask, 2);
+            return value & Convert.ToByte(mask ?? BitMask.Default, 2);
         }
 
         /// <summary>
         /// Byte -> Hex
         /// </summary>
-        public static string ByteToHex(byte value, string mask = "11111111")
+        public static string ByteToHex(byte value, BitMask? mask = null)
         {
             return ByteToInt(value, mask).ToString("X2");
         }
@@ -41,21 +40,18 @@ namespace WpfJikken6.Utility
         /// <summary>
         /// ByteArray -> Int (Big Endian)
         /// </summary>
-        public static int ByteArrayToInt(byte[] values, string[]? masks = null)
+        public static int ByteArrayToInt(byte[] values, BitMask[]? masks = null)
         {
             int result = 0;
             int bitValue = 1;
 
-            masks ??= Enumerable.Repeat("11111111", values.Length).ToArray();
+            masks ??= Enumerable.Repeat(BitMask.Default, values.Length).ToArray();
 
             for (int i = values.Length - 1; i >= 0; i--)
             {
-                ThrowIfInvalidMask(masks[i]);
-                var mask = Convert.ToByte(masks[i], 2);
-
                 for (int j = 0; j < 8; j++)
                 {
-                    if ((mask & (1 << j)) != 0)
+                    if ((masks[i] & (1 << j)) != 0)
                     {
                         if ((values[i] & (1 << j)) != 0)
                             result += bitValue;
@@ -87,12 +83,6 @@ namespace WpfJikken6.Utility
         public static string ByteArrayToHex(byte[] values)
         {
             return string.Join("", values.Select(b => b.ToString("X2")));
-        }
-
-        private static void ThrowIfInvalidMask(string mask)
-        {
-            if (mask.Length != 8 || !mask.All(c => c == '0' || c == '1'))
-                throw new MaskFormatException();
         }
     }
 }
