@@ -14,6 +14,14 @@ namespace WpfJikken6.Utility
         }
 
         /// <summary>
+        /// Int -> Hex (Big Endian)
+        /// </summary>
+        public static string IntToHex(int value)
+        {
+            return value.ToString("X2");
+        }
+
+        /// <summary>
         /// Byte -> Int
         /// </summary>
         public static int ByteToInt(byte value, string mask = "11111111")
