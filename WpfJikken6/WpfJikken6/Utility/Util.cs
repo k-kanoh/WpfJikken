@@ -1,5 +1,6 @@
 ﻿using Csv;
 using WpfJikken6.Utility;
+using WpfJikken6.Utility.Exception;
 
 namespace WpfJikken6
 {
@@ -71,6 +72,15 @@ namespace WpfJikken6
                                              select (string)(p.GetValue(x) ?? "")).ToArray());
 
             return CsvWriter.WriteToText(headers.ToArray(), contents, skipHeaderRow: skipHeaderRow);
+        }
+
+        /// <summary>
+        /// 文字列が8ビットのビットパターンとして有効か検証します。
+        /// </summary>
+        public static void ThrowIfInvalidBitPattern(string pattern)
+        {
+            if (pattern.Length == 0 || pattern.Length % 8 > 0 || !pattern.All(c => c == '0' || c == '1'))
+                throw new BitPatternFormatException();
         }
     }
 }

@@ -8,16 +8,27 @@ namespace WpfJikken6.ValueObject
         private readonly string _hex;
         private readonly int _int;
 
+        private Hex(int intValue)
+        {
+            _hex = intValue.ToString("X2");
+            _int = intValue;
+        }
+
         public Hex(string hex)
         {
             if (!uint.TryParse(hex, NumberStyles.HexNumber, null, out _))
                 throw new HexFormatException();
 
-            _hex = hex;
-            _int = hex.ToInt();
+            _hex = hex.ToUpper();
+            _int = int.Parse(hex, NumberStyles.HexNumber);
         }
+
+        public static Hex operator +(Hex obj, int value) => new(obj._int + value);
+        public static Hex operator -(Hex obj, int value) => new(obj._int - value);
 
         public static implicit operator string(Hex obj) => obj._hex;
         public static implicit operator int(Hex obj) => obj._int;
+
+        public static explicit operator byte(Hex obj) => (byte)obj._int;
     }
 }

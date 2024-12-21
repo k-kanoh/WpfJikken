@@ -18,9 +18,9 @@
         public int Size { get; set; } = 1;
 
         /// <summary>
-        /// マスク
+        /// ビット
         /// </summary>
-        public string Mask { get; set; } = "11111111";
+        public string? Bit { get; set; }
 
         /// <summary>
         /// 間隔
