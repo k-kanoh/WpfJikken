@@ -1,7 +1,6 @@
 ﻿using System.Windows;
 using System.Windows.Controls;
 using WpfJikken6.Base;
-using WpfJikken6.DataObject;
 
 namespace WpfJikken6
 {
@@ -10,7 +9,7 @@ namespace WpfJikken6
         public MainWindow()
         {
             InitializeComponent();
-            DataContext = new MainWindowViewModel(this);
+            DataContext = new MainWindowViewModel();
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)

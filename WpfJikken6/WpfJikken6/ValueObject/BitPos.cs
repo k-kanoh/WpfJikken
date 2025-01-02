@@ -9,6 +9,11 @@
             _bytes = Enumerable.Repeat((byte)0xFF, size).ToArray();
         }
 
+        private BitPos(byte[] bytes)
+        {
+            _bytes = bytes;
+        }
+
         public BitPos(string pattern)
         {
             Util.ThrowIfInvalidBitPattern(pattern);
@@ -27,6 +32,25 @@
         public byte[] Bytes => _bytes;
 
         public string[] Patterns => _bytes.Select(x => Convert.ToString(x, 2).PadLeft(8, '0')).ToArray();
+
+        public int MaxValue
+        {
+            get
+            {
+                int digit = 1;
+
+                for (int i = _bytes.Length - 1; i >= 0; i--)
+                {
+                    for (int j = 0; j < 8; j++)
+                    {
+                        if ((_bytes[i] & (1 << j)) != 0)
+                            digit *= 2;
+                    }
+                }
+
+                return digit - 1;
+            }
+        }
 
         /// <summary>
         /// ビットパターンの1が立っている位置に値をセットします。
@@ -127,6 +151,18 @@
             }
 
             return result;
+        }
+
+        public static BitPos operator >>(BitPos obj, int value)
+        {
+            var bytes = obj.Bytes.Select(x => (byte)(x >> value)).ToArray();
+            return new BitPos(bytes);
+        }
+
+        public static BitPos operator <<(BitPos obj, int value)
+        {
+            var bytes = obj.Bytes.Select(x => (byte)(x << value)).ToArray();
+            return new BitPos(bytes);
         }
     }
 }

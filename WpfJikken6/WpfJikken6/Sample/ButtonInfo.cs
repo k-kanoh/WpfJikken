@@ -1,4 +1,4 @@
-﻿namespace WpfJikken6.DataObject
+﻿namespace WpfJikken6
 {
     public class ButtonInfo
     {

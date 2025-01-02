@@ -8,10 +8,10 @@ namespace WpfJikken6.ValueObject
         private readonly string _hex;
         private readonly int _int;
 
-        private Hex(int intValue)
+        private Hex(int value)
         {
-            _hex = intValue.ToString("X2");
-            _int = intValue;
+            _hex = value.ToString("X2");
+            _int = value;
         }
 
         public Hex(string hex)

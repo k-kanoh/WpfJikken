@@ -1,4 +1,6 @@
 ﻿using Csv;
+using System.IO;
+using System.Text;
 using WpfJikken6.Utility;
 using WpfJikken6.Utility.Exception;
 
@@ -6,6 +8,22 @@ namespace WpfJikken6
 {
     public static class Util
     {
+        static Util()
+        {
+            Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
+            Shift_JIS = Encoding.GetEncoding(932);
+        }
+
+        /// <summary>
+        /// Shift_JIS
+        /// </summary>
+        public static readonly Encoding Shift_JIS;
+
+        /// <summary>
+        /// デスクトップ
+        /// </summary>
+        public static DirectoryInfo Desktop => new(Environment.GetFolderPath(Environment.SpecialFolder.DesktopDirectory));
+
         /// <summary>
         /// オブジェクトを比較して同じ名前のプロパティの値をコピーします。
         /// Required修飾子が付与されたプロパティはコピー対象外です。
@@ -46,7 +64,13 @@ namespace WpfJikken6
                 var instance = new T();
 
                 foreach (var p in props)
-                    p.prop.SetValue(instance, line[p.FieldNo]);
+                {
+                    if (p.FieldNo <= line.ColumnCount)
+                    {
+                        if (!string.IsNullOrEmpty(line[p.FieldNo - 1]))
+                            p.prop.SetValue(instance, line[p.FieldNo - 1]);
+                    }
+                }
 
                 list.Add(instance);
             }

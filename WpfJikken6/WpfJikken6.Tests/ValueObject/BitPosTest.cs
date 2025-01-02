@@ -81,5 +81,25 @@ namespace WpfJikken6.Tests.ValueObject
             var bitPos = BitPos.GetDefault(size);
             Assert.That(bitPos.Bytes, Is.EqualTo(expected));
         }
+
+        [TestCase("10000000", 4, "00001000")]
+        [TestCase("11000000", 2, "00110000")]
+        [TestCase("00001111", 2, "00000011")]
+        public void ShiftRight_ShiftsCorrectly(string pattern, int shift, string expected)
+        {
+            var bitPos = new BitPos(pattern);
+            var shifted = bitPos >> shift;
+            Assert.That(shifted.Patterns[0], Is.EqualTo(expected));
+        }
+
+        [TestCase("00001000", 4, "10000000")]
+        [TestCase("00110000", 2, "11000000")]
+        [TestCase("00000011", 2, "00001100")]
+        public void ShiftLeft_ShiftsCorrectly(string pattern, int shift, string expected)
+        {
+            var bitPos = new BitPos(pattern);
+            var shifted = bitPos << shift;
+            Assert.That(shifted.Patterns[0], Is.EqualTo(expected));
+        }
     }
 }

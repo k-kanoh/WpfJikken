@@ -1,6 +1,6 @@
 ﻿namespace WpfJikken6.ValueObject
 {
-    public class CompositeBytesValue
+    public class CompositeBytesValue : IBinary
     {
         public byte[] Original { get; }
 

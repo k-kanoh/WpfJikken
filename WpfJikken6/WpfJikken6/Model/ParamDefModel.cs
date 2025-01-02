@@ -1,11 +1,14 @@
-﻿namespace WpfJikken6.DataObject
+﻿using WpfJikken6.Poco;
+using WpfJikken6.ValueObject;
+
+namespace WpfJikken6.Model
 {
-    public class ParameterDefinition(int next)
+    public class ParamDefModel
     {
         /// <summary>
         /// アドレス
         /// </summary>
-        public required string Address { get; set; }
+        public required Hex Address { get; set; }
 
         /// <summary>
         /// 名前 (Index設定時のキーも兼ねる)
@@ -15,7 +18,7 @@
         /// <summary>
         /// サイズ(Byte)
         /// </summary>
-        public int Size { get; set; } = 1;
+        public int? Size { get; set; }
 
         /// <summary>
         /// ビット
@@ -25,12 +28,22 @@
         /// <summary>
         /// 間隔
         /// </summary>
-        public int Next { get; set; } = next;
+        public int? Next { get; set; }
+
+        /// <summary>
+        /// 間隔 (Bit)
+        /// </summary>
+        public int? NextBit { get; set; }
 
         /// <summary>
         /// 表示方法
         /// </summary>
         public EnmDisp Disp { get; set; } = EnmDisp.Dec;
+
+        /// <summary>
+        /// 行数
+        /// </summary>
+        public int Row { get; set; }
 
         /// <summary>
         /// 最小値
@@ -56,5 +69,9 @@
         /// メモ
         /// </summary>
         public string? Memo { get; set; }
+
+        public MasterItems? Masters { get; set; }
+
+        public IBinary Binary { get; set; } = null!;
     }
 }

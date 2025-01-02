@@ -1,6 +1,5 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using System.Collections.ObjectModel;
-using WpfJikken6.DataObject;
 
 namespace WpfJikken6
 {
@@ -13,10 +12,10 @@ namespace WpfJikken6
         private string description = "ここに説明文を記載します。\n複数行の説明文を記載できます。";
 
         [ObservableProperty]
-        private ObservableCollection<Sample> gridItems;
+        private ObservableCollection<GridInfo> gridItems;
 
         [ObservableProperty]
-        public ObservableCollection<string> comboBoxItems;
+        private ObservableCollection<string> comboBoxItems;
 
         public SubWindowViewModel(string windowTitle)
         {
@@ -31,9 +30,9 @@ namespace WpfJikken6
 
             GridItems =
             [
-                new() { Name = "項目1", Text = "テキスト1", IsSelected = true, Type = "やくそう" },
-                new() { Name = "項目2", Text = "テキスト2", IsSelected = false, Type = "どくけしそう" },
-                new() { Name = "項目3", Text = "テキスト3", IsSelected = true, Type = "キメラのつばさ" }
+                new GridInfo() { Name = "項目1", Text = "テキスト1", IsSelected = true, Type = "やくそう" },
+                new GridInfo() { Name = "項目2", Text = "テキスト2", IsSelected = false, Type = "どくけしそう" },
+                new GridInfo() { Name = "項目3", Text = "テキスト3", IsSelected = true, Type = "キメラのつばさ" }
             ];
         }
     }

@@ -1,29 +1,34 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using System.Collections.ObjectModel;
-using System.Windows;
-using WpfJikken6.DataObject;
+using WpfJikken6.Infrastructure.Bne2.Service;
 
 namespace WpfJikken6
 {
     public partial class MainWindowViewModel : ObservableObject
     {
-        private Window mainWindow;
-
         [ObservableProperty]
         private string title = "メイン画面";
 
         [ObservableProperty]
         public ObservableCollection<ButtonInfo> buttons;
 
-        public MainWindowViewModel(Window window)
+        public MainWindowViewModel()
         {
-            mainWindow = window;
+            var allIdn = Bne2IdnLoader.LoadAllCsv();
+
+            var allIni = Bne2IniLoaderMock.LoadAllCsv();
+
+            var jikken1 = from a in allIni
+                          group a by new { a.Item2.Filter } into agroup
+                          select agroup;
+
+            Title = "";
 
             buttons =
             [
-                new() { Title = "サブ画面1" },
-                new() { Title = "サブ画面2" },
-                new() { Title = "サブ画面3" }
+                new ButtonInfo() { Title = "サブ画面1" },
+                new ButtonInfo() { Title = "サブ画面2" },
+                new ButtonInfo() { Title = "サブ画面3" }
             ];
         }
     }

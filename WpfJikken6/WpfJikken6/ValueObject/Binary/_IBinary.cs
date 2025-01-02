@@ -2,12 +2,8 @@
 {
     public interface IBinary
     {
-        byte Original { get; }
-        byte Modified { get; }
-        BitPos BitPos { get; }
+        int Int { get; }
 
-        void SetValueWithFilter(int value);
-
-        void SetValueNoFilter(int value);
+        void SetValue(int value);
     }
 }

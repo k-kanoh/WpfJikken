@@ -1,6 +1,6 @@
-﻿namespace WpfJikken6.DataObject
+﻿namespace WpfJikken6
 {
-    public class Sample
+    public class GridInfo
     {
         public required string Name { get; set; }
         public required string Text { get; set; }

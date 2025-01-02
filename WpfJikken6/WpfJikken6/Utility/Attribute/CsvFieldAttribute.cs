@@ -1,11 +1,11 @@
 ﻿namespace WpfJikken6.Utility
 {
     /// <summary>
-    /// Csv出力の列番号を設定します。
+    /// Csv出力の列番号を設定します。 (1起算)
     /// </summary>
     [AttributeUsage(AttributeTargets.Property)]
     public class CsvFieldAttribute(int no) : Attribute
     {
-        public required int FieldNo { get; init; } = no;
+        public int FieldNo { get; } = no;
     }
 }

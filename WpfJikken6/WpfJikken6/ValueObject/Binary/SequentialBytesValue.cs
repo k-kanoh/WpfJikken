@@ -1,6 +1,6 @@
 ﻿namespace WpfJikken6.ValueObject
 {
-    public class SequentialBytesValue
+    public class SequentialBytesValue : IBinary
     {
         public byte[] Original { get; }
 

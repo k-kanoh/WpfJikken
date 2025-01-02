@@ -1,6 +1,6 @@
 ﻿namespace WpfJikken6.ValueObject
 {
-    public class SingleByteValue
+    public class SingleByteValue : IBinary
     {
         public byte Original { get; }
 
