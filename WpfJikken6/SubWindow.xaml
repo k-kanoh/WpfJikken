@@ -49,7 +49,15 @@
                         Width="*"
                         Binding="{Binding Text}"
                         Header="テキスト" />
-                    <DataGridCheckBoxColumn Binding="{Binding IsSelected}" Header="選択" />
+                    <DataGridCheckBoxColumn
+                        Binding="{Binding IsSelected}"
+                        Header="選択">
+                        <DataGridCheckBoxColumn.CellStyle>
+                            <Style BasedOn="{StaticResource DataGridCellStyle}" TargetType="DataGridCell">
+                                <Setter Property="HorizontalContentAlignment" Value="Center" />
+                            </Style>
+                        </DataGridCheckBoxColumn.CellStyle>
+                    </DataGridCheckBoxColumn>
                     <DataGridComboBoxColumn
                         Width="140"
                         Header="種別"
