@@ -6,16 +6,16 @@ namespace WpfJikken3
     public partial class SubWindowViewModel : ObservableObject
     {
         [ObservableProperty]
-        private string title;
+        public partial string Title { get; set; }
 
         [ObservableProperty]
-        private string description = "ここに説明文を記載します。\n複数行の説明文を記載できます。";
+        public partial string Description { get; set; } = "ここに説明文を記載します。\n複数行の説明文を記載できます。";
 
         [ObservableProperty]
-        private ObservableCollection<DataObject> gridItems;
+        public partial ObservableCollection<DataObject> GridItems { get; set; }
 
         [ObservableProperty]
-        public ObservableCollection<string> comboBoxItems;
+        public partial ObservableCollection<string> ComboBoxItems { get; set; }
 
         public SubWindowViewModel(string windowTitle)
         {

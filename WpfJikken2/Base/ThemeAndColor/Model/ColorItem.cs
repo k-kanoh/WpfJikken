@@ -11,7 +11,7 @@ namespace WpfJikken2.Base.ThemeAndColor
         public Brush SelectedBackgroundColor { get; set; }
 
         [ObservableProperty]
-        private bool isSelected;
+        public partial bool IsSelected { get; set; }
 
         public ColorItem(Theme theme)
         {

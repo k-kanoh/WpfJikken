@@ -10,16 +10,16 @@ namespace WpfJikken6
         private Window mainWindow;
 
         [ObservableProperty]
-        private string title = "メイン画面";
+        public partial string Title { get; set; } = "メイン画面";
 
         [ObservableProperty]
-        public ObservableCollection<ButtonInfo> buttons;
+        public partial ObservableCollection<ButtonInfo> Buttons { get; set; }
 
         public MainWindowViewModel(Window window)
         {
             mainWindow = window;
 
-            buttons =
+            Buttons =
             [
                 new() { Title = "サブ画面1" },
                 new() { Title = "サブ画面2" },
