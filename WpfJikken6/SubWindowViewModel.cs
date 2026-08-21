@@ -1,4 +1,4 @@
-﻿using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.ComponentModel;
 using System.Collections.ObjectModel;
 using WpfJikken6.DataObject;
 
@@ -15,25 +15,17 @@ namespace WpfJikken6
         [ObservableProperty]
         public partial ObservableCollection<Sample> GridItems { get; set; }
 
-        [ObservableProperty]
-        public partial ObservableCollection<string> ComboBoxItems { get; set; }
+        public ObservableCollection<ItemMasterEntry> ComboBoxItems => ItemMaster.Entries;
 
         public SubWindowViewModel(string windowTitle)
         {
             Title = windowTitle;
 
-            ComboBoxItems =
-            [
-                "やくそう",
-                "どくけしそう",
-                "キメラのつばさ"
-            ];
-
             GridItems =
             [
-                new() { Name = "項目1", Text = "テキスト1", IsSelected = true, Type = "やくそう" },
-                new() { Name = "項目2", Text = "テキスト2", IsSelected = false, Type = "どくけしそう" },
-                new() { Name = "項目3", Text = "テキスト3", IsSelected = true, Type = "キメラのつばさ" }
+                new() { Name = "項目1", Text = "テキスト1", IsSelected = true, ItemCode = 0x01 },
+                new() { Name = "項目2", Text = "テキスト2", IsSelected = false, ItemCode = 0x09 },
+                new() { Name = "項目3", Text = "テキスト3", IsSelected = true, ItemCode = 0x9999 }
             ];
         }
     }

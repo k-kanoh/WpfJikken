@@ -12,12 +12,41 @@ namespace WpfJikken6
         {
             base.OnAttached();
             AssociatedObject.PreviewMouseLeftButtonDown += DataGrid_PreviewMouseLeftButtonDown;
+            AssociatedObject.PreviewMouseDoubleClick += DataGrid_PreviewMouseDoubleClick;
         }
 
         protected override void OnDetaching()
         {
             AssociatedObject.PreviewMouseLeftButtonDown -= DataGrid_PreviewMouseLeftButtonDown;
+            AssociatedObject.PreviewMouseDoubleClick -= DataGrid_PreviewMouseDoubleClick;
             base.OnDetaching();
+        }
+
+        private void DataGrid_PreviewMouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            if (e.OriginalSource is not FrameworkElement element) return;
+            if (sender is not DataGrid dataGrid) return;
+
+            var cell = element.GetVisualAncestor<DataGridCell>();
+            if (cell == null) return;
+
+            if (!cell.IsEditing)
+            {
+                cell.Focus();
+                dataGrid.BeginEdit();
+                cell.UpdateLayout();
+            }
+
+            var comboBox = cell.GetVisualDescendant<ComboBox>();
+            var textBox = cell.GetVisualDescendant<TextBox>();
+            if (comboBox == null || textBox == null) return;
+
+            comboBox.IsDropDownOpen = false;
+            comboBox.Visibility = Visibility.Collapsed;
+            textBox.Visibility = Visibility.Visible;
+            textBox.Focus();
+            textBox.SelectAll();
+            e.Handled = true;
         }
 
         private void DataGrid_PreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
@@ -32,16 +61,17 @@ namespace WpfJikken6
             if (row != null)
                 dataGrid.SelectedItem = row.Item;
 
-            if (cell.Column is DataGridComboBoxColumn)
+            if (cell.Column is DataGridTemplateColumn)
             {
                 if (!cell.IsEditing)
                 {
                     cell.Focus();
                     dataGrid.BeginEdit();
+                    cell.UpdateLayout();
                 }
 
-                var comboBox = element.GetVisualDescendant<ComboBox>();
-                if (comboBox != null)
+                var comboBox = cell.GetVisualDescendant<ComboBox>();
+                if (comboBox != null && !comboBox.IsDropDownOpen)
                 {
                     comboBox.IsDropDownOpen = true;
                     e.Handled = true;
