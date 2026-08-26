@@ -1,6 +1,6 @@
-﻿using CommunityToolkit.Mvvm.ComponentModel;
-using System.Collections.ObjectModel;
+﻿using System.Collections.ObjectModel;
 using System.Windows;
+using CommunityToolkit.Mvvm.ComponentModel;
 using WpfJikken6.DataObject;
 
 namespace WpfJikken6
@@ -19,12 +19,7 @@ namespace WpfJikken6
         {
             mainWindow = window;
 
-            Buttons =
-            [
-                new() { Title = "サブ画面1" },
-                new() { Title = "サブ画面2" },
-                new() { Title = "サブ画面3" }
-            ];
+            Buttons = [new() { Title = "サブ画面1" }, new() { Title = "サブ画面2" }, new() { Title = "サブ画面3" }];
         }
     }
 }

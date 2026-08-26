@@ -1,5 +1,5 @@
-using CommunityToolkit.Mvvm.ComponentModel;
 using System.Collections.ObjectModel;
+using CommunityToolkit.Mvvm.ComponentModel;
 using WpfJikken6.DataObject;
 
 namespace WpfJikken6
@@ -23,9 +23,27 @@ namespace WpfJikken6
 
             GridItems =
             [
-                new() { Name = "項目1", Text = "テキスト1", IsSelected = true, ItemCode = 0x01 },
-                new() { Name = "項目2", Text = "テキスト2", IsSelected = false, ItemCode = 0x09 },
-                new() { Name = "項目3", Text = "テキスト3", IsSelected = true, ItemCode = 0x9999 }
+                new()
+                {
+                    Name = "項目1",
+                    Text = "テキスト1",
+                    IsSelected = true,
+                    ItemCode = 0x01,
+                },
+                new()
+                {
+                    Name = "項目2",
+                    Text = "テキスト2",
+                    IsSelected = false,
+                    ItemCode = 0x09,
+                },
+                new()
+                {
+                    Name = "項目3",
+                    Text = "テキスト3",
+                    IsSelected = true,
+                    ItemCode = 0x9999,
+                },
             ];
         }
     }

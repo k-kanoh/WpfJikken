@@ -1,8 +1,8 @@
-﻿using Microsoft.Xaml.Behaviors;
-using System.Windows;
+﻿using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
+using Microsoft.Xaml.Behaviors;
 
 namespace WpfJikken1
 {
@@ -24,11 +24,14 @@ namespace WpfJikken1
 
         private void DataGrid_PreviewMouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
-            if (e.OriginalSource is not FrameworkElement element) return;
-            if (sender is not DataGrid dataGrid) return;
+            if (e.OriginalSource is not FrameworkElement element)
+                return;
+            if (sender is not DataGrid dataGrid)
+                return;
 
             var cell = element.GetVisualAncestor<DataGridCell>();
-            if (cell == null) return;
+            if (cell == null)
+                return;
 
             if (!cell.IsEditing)
             {
@@ -39,7 +42,8 @@ namespace WpfJikken1
 
             var comboBox = cell.GetVisualDescendant<ComboBox>();
             var textBox = cell.GetVisualDescendant<TextBox>();
-            if (comboBox == null || textBox == null) return;
+            if (comboBox == null || textBox == null)
+                return;
 
             comboBox.IsDropDownOpen = false;
             comboBox.Visibility = Visibility.Collapsed;
@@ -51,11 +55,14 @@ namespace WpfJikken1
 
         private void DataGrid_PreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
-            if (e.OriginalSource is not FrameworkElement element) return;
-            if (sender is not DataGrid dataGrid) return;
+            if (e.OriginalSource is not FrameworkElement element)
+                return;
+            if (sender is not DataGrid dataGrid)
+                return;
 
             var cell = element.GetVisualAncestor<DataGridCell>();
-            if (cell == null) return;
+            if (cell == null)
+                return;
 
             var row = DataGridRow.GetRowContainingElement(cell);
             if (row != null)
@@ -97,7 +104,8 @@ namespace WpfJikken1
 
     public static class VisualTreeHelperExtensions
     {
-        public static T? GetVisualAncestor<T>(this DependencyObject element) where T : DependencyObject
+        public static T? GetVisualAncestor<T>(this DependencyObject element)
+            where T : DependencyObject
         {
             while (element != null && !(element is T))
                 element = VisualTreeHelper.GetParent(element);
@@ -105,9 +113,11 @@ namespace WpfJikken1
             return element as T;
         }
 
-        public static T? GetVisualDescendant<T>(this DependencyObject element) where T : DependencyObject
+        public static T? GetVisualDescendant<T>(this DependencyObject element)
+            where T : DependencyObject
         {
-            if (element == null) return null;
+            if (element == null)
+                return null;
 
             for (int i = 0; i < VisualTreeHelper.GetChildrenCount(element); i++)
             {

@@ -1,6 +1,6 @@
-﻿using Microsoft.Xaml.Behaviors;
-using System.Windows;
+﻿using System.Windows;
 using System.Windows.Input;
+using Microsoft.Xaml.Behaviors;
 
 namespace WpfJikken1
 {
@@ -15,7 +15,7 @@ namespace WpfJikken1
                 Key = Key.W,
                 Modifiers = ModifierKeys.Control,
                 Command = WindowCommands.Close,
-                CommandParameter = AssociatedObject
+                CommandParameter = AssociatedObject,
             };
 
             AssociatedObject.InputBindings.Add(closeBinding);

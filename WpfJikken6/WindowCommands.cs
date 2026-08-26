@@ -1,6 +1,6 @@
-﻿using CommunityToolkit.Mvvm.Input;
-using System.Windows;
+﻿using System.Windows;
 using System.Windows.Input;
+using CommunityToolkit.Mvvm.Input;
 
 namespace WpfJikken6
 {

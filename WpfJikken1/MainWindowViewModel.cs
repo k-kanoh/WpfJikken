@@ -1,7 +1,7 @@
-﻿using CommunityToolkit.Mvvm.ComponentModel;
-using CommunityToolkit.Mvvm.Input;
-using System.Collections.ObjectModel;
+﻿using System.Collections.ObjectModel;
 using System.Windows;
+using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
 
 namespace WpfJikken1
 {
@@ -19,12 +19,7 @@ namespace WpfJikken1
         {
             mainWindow = window;
 
-            Buttons =
-            [
-                new() { Title = "サブ画面1" },
-                new() { Title = "サブ画面2" },
-                new() { Title = "サブ画面3" }
-            ];
+            Buttons = [new() { Title = "サブ画面1" }, new() { Title = "サブ画面2" }, new() { Title = "サブ画面3" }];
         }
 
         [RelayCommand]
