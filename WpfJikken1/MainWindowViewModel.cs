@@ -27,7 +27,6 @@ namespace WpfJikken1
         {
             var window = new SubWindow();
 
-            window.Owner = mainWindow;
             window.DataContext = new SubWindowViewModel(title);
             window.Show();
         }
