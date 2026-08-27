@@ -7,9 +7,6 @@
     Title="{Binding Title}"
     Width="800"
     Height="450">
-    <Window.Resources>
-        <local:HexIntConverter x:Key="HexIntConverter" />
-    </Window.Resources>
     <b:Interaction.Behaviors>
         <local:WindowKeyBindingBehavior />
     </b:Interaction.Behaviors>
@@ -31,6 +28,7 @@
             </Grid.RowDefinitions>
 
             <DataGrid
+                x:Name="PropDataGrid"
                 Grid.Row="0"
                 Margin="5"
                 AutoGenerateColumns="False"
@@ -44,51 +42,10 @@
                 </b:Interaction.Behaviors>
                 <DataGrid.Columns>
                     <DataGridTextColumn
-                        Width="100"
-                        Binding="{Binding Name}"
-                        Header="名前" />
-                    <DataGridTextColumn
-                        Width="*"
-                        Binding="{Binding Text}"
-                        Header="テキスト" />
-                    <DataGridCheckBoxColumn Binding="{Binding IsSelected}" Header="選択" />
-                    <DataGridTemplateColumn Width="200" Header="種別">
-                        <DataGridTemplateColumn.CellTemplate>
-                            <DataTemplate>
-                                <TextBlock
-                                    Padding="4,0"
-                                    VerticalAlignment="Center"
-                                    Text="{Binding DisplayText}" />
-                            </DataTemplate>
-                        </DataGridTemplateColumn.CellTemplate>
-                        <DataGridTemplateColumn.CellEditingTemplate>
-                            <DataTemplate>
-                                <Grid>
-                                    <ComboBox
-                                        x:Name="ComboEditor"
-                                        DisplayMemberPath="DisplayLabel"
-                                        IsDropDownOpen="True"
-                                        ItemsSource="{Binding DataContext.ComboBoxItems, RelativeSource={RelativeSource AncestorType=Window}}"
-                                        SelectedValue="{Binding ItemCode, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                                        SelectedValuePath="Code"
-                                        VirtualizingPanel.IsVirtualizing="True"
-                                        VirtualizingPanel.IsVirtualizingWhenGrouping="True"
-                                        VirtualizingPanel.ScrollUnit="Item"
-                                        VirtualizingPanel.VirtualizationMode="Recycling">
-                                        <ComboBox.ItemsPanel>
-                                            <ItemsPanelTemplate>
-                                                <VirtualizingStackPanel />
-                                            </ItemsPanelTemplate>
-                                        </ComboBox.ItemsPanel>
-                                    </ComboBox>
-                                    <TextBox
-                                        x:Name="TextEditor"
-                                        Text="{Binding ItemCode, Mode=TwoWay, UpdateSourceTrigger=LostFocus, Converter={StaticResource HexIntConverter}, ConverterParameter=1}"
-                                        Visibility="Collapsed" />
-                                </Grid>
-                            </DataTemplate>
-                        </DataGridTemplateColumn.CellEditingTemplate>
-                    </DataGridTemplateColumn>
+                        Width="150"
+                        Binding="{Binding Header}"
+                        Header=""
+                        IsReadOnly="True" />
                 </DataGrid.Columns>
             </DataGrid>
 
