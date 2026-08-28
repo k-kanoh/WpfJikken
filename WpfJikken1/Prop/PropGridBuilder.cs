@@ -96,6 +96,9 @@ namespace WpfJikken1.Prop
 
             var textFactory = new FrameworkElementFactory(typeof(TextBox), "TextEditor");
             textFactory.SetValue(UIElement.VisibilityProperty, Visibility.Collapsed);
+            textFactory.SetValue(TextBox.PaddingProperty, new Thickness(4, 0, 4, 0));
+            textFactory.SetValue(TextBox.VerticalContentAlignmentProperty, VerticalAlignment.Center);
+            textFactory.SetValue(TextBox.TextAlignmentProperty, TextAlignment.Right);
             textFactory.SetBinding(
                 TextBox.TextProperty,
                 new Binding($"[{field.Caption}]")
@@ -151,11 +154,23 @@ namespace WpfJikken1.Prop
             var cellStyle = new Style(typeof(DataGridCell));
             cellStyle.Setters.Add(new Setter(UIElement.IsEnabledProperty, new Binding($"FieldEnabled[{field.Caption}]")));
 
+            var elementStyle = new Style(typeof(TextBlock));
+            elementStyle.Setters.Add(new Setter(TextBlock.PaddingProperty, new Thickness(4, 0, 4, 0)));
+            elementStyle.Setters.Add(new Setter(TextBlock.VerticalAlignmentProperty, VerticalAlignment.Center));
+            elementStyle.Setters.Add(new Setter(TextBlock.TextAlignmentProperty, TextAlignment.Right));
+
+            var editingElementStyle = new Style(typeof(TextBox));
+            editingElementStyle.Setters.Add(new Setter(TextBox.PaddingProperty, new Thickness(4, 0, 4, 0)));
+            editingElementStyle.Setters.Add(new Setter(TextBox.VerticalContentAlignmentProperty, VerticalAlignment.Center));
+            editingElementStyle.Setters.Add(new Setter(TextBox.TextAlignmentProperty, TextAlignment.Right));
+
             return new DataGridTextColumn
             {
                 Header = field.Caption,
                 Width = new DataGridLength(120),
                 CellStyle = cellStyle,
+                ElementStyle = elementStyle,
+                EditingElementStyle = editingElementStyle,
                 Binding = new Binding($"[{field.Caption}]")
                 {
                     Mode = BindingMode.TwoWay,
