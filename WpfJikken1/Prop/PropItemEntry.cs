@@ -1,8 +1,10 @@
+using WpfJikken1.DataObject;
+
 namespace WpfJikken1.Prop
 {
     public class PropItemEntry
     {
-        public required string Hex { get; set; }
+        public required Hex Hex { get; set; }
         public required string Name { get; set; }
     }
 
@@ -13,6 +15,6 @@ namespace WpfJikken1.Prop
 
         public string DisplayLabel => $"{Code:X2}  {Name}";
 
-        public static PropItemOption FromEntry(PropItemEntry entry) => new() { Code = Convert.ToInt32(entry.Hex[2..], 16), Name = entry.Name };
+        public static PropItemOption FromEntry(PropItemEntry entry) => new() { Code = entry.Hex, Name = entry.Name };
     }
 }

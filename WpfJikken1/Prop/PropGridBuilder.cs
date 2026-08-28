@@ -29,7 +29,7 @@ namespace WpfJikken1.Prop
                     if (enabled)
                     {
                         var step = field.Step ?? field.Size;
-                        var offset = field.AddressValue + i * step;
+                        var offset = field.Address + i * step;
                         row[field.Caption] = ReadValue(data, offset, field);
                     }
                 }
