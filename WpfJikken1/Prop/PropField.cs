@@ -9,8 +9,8 @@ namespace WpfJikken1.Prop
         public int? Step { get; set; }
         public int? Count { get; set; }
         public required string Display { get; set; }
-        public string? MinValue { get; set; }
-        public string? MaxValue { get; set; }
+        public object? MinValue { get; set; }
+        public object? MaxValue { get; set; }
         public string? Width { get; set; }
         public string? Memo { get; set; }
         public string? Master { get; set; }

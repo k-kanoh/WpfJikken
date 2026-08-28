@@ -11,12 +11,7 @@ namespace WpfJikken1.Prop
     // フィールドごとに行数(count)・有効/無効を個別に判定する。
     public static class PropGridBuilder
     {
-        public static ObservableCollection<PropRow> BuildRows(
-            IReadOnlyList<PropField> fields,
-            IReadOnlyList<PropListEntry> list,
-            byte[] data,
-            int windowBaseAddress
-        )
+        public static ObservableCollection<PropRow> BuildRows(IReadOnlyList<PropField> fields, IReadOnlyList<PropListEntry> list, byte[] data)
         {
             var rows = new ObservableCollection<PropRow>();
 
@@ -34,7 +29,7 @@ namespace WpfJikken1.Prop
                     if (enabled)
                     {
                         var step = field.Step ?? field.Size;
-                        var offset = (field.AddressValue - windowBaseAddress) + i * step;
+                        var offset = field.AddressValue + i * step;
                         row[field.Caption] = ReadValue(data, offset, field);
                     }
                 }
