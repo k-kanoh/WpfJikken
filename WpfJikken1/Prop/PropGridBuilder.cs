@@ -3,6 +3,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
 using System.Windows.Data;
+using System.Windows.Media;
 
 namespace WpfJikken1.Prop
 {
@@ -83,7 +84,7 @@ namespace WpfJikken1.Prop
             var gridFactory = new FrameworkElementFactory(typeof(Grid));
 
             var comboFactory = new FrameworkElementFactory(typeof(ComboBox), "ComboEditor");
-            comboFactory.SetValue(ComboBox.DisplayMemberPathProperty, nameof(PropItemOption.DisplayLabel));
+            comboFactory.SetValue(ComboBox.ItemTemplateProperty, BuildItemOptionTemplate());
             comboFactory.SetValue(ComboBox.SelectedValuePathProperty, nameof(PropItemOption.Code));
             comboFactory.SetValue(ItemsControl.ItemsSourceProperty, options);
             comboFactory.SetValue(ComboBox.IsDropDownOpenProperty, true);
@@ -120,6 +121,28 @@ namespace WpfJikken1.Prop
                 CellEditingTemplate = editingTemplate,
                 CellStyle = cellStyle,
             };
+        }
+
+        // hex部分だけ背景をグレーにして、コード値と名前を視覚的に分ける。
+        private static DataTemplate BuildItemOptionTemplate()
+        {
+            var panelFactory = new FrameworkElementFactory(typeof(StackPanel));
+            panelFactory.SetValue(StackPanel.OrientationProperty, Orientation.Horizontal);
+
+            var hexFactory = new FrameworkElementFactory(typeof(TextBlock));
+            hexFactory.SetValue(TextBlock.BackgroundProperty, Brushes.LightGray);
+            hexFactory.SetValue(TextBlock.PaddingProperty, new Thickness(4, 0, 4, 0));
+            hexFactory.SetValue(TextBlock.MinWidthProperty, 32.0);
+            hexFactory.SetValue(TextBlock.TextAlignmentProperty, TextAlignment.Center);
+            hexFactory.SetBinding(TextBlock.TextProperty, new Binding(nameof(PropItemOption.Code)) { StringFormat = "X2" });
+            panelFactory.AppendChild(hexFactory);
+
+            var nameFactory = new FrameworkElementFactory(typeof(TextBlock));
+            nameFactory.SetValue(TextBlock.MarginProperty, new Thickness(6, 0, 0, 0));
+            nameFactory.SetBinding(TextBlock.TextProperty, new Binding(nameof(PropItemOption.Name)));
+            panelFactory.AppendChild(nameFactory);
+
+            return new DataTemplate { VisualTree = panelFactory };
         }
 
         // list以外のdisplay(hex/decimal/signedDecimal)は今回未検証。生値をhexで直接編集するだけの最小実装。

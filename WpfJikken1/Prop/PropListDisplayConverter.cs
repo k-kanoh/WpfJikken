@@ -14,7 +14,8 @@ namespace WpfJikken1.Prop
                 if (match != null)
                     return match.Name;
             }
-            return $"0x{code:X2}";
+
+            return code == 0 ? "" : $"0x{code:X2}";
         }
 
         public object ConvertBack(object? value, Type targetType, object? parameter, CultureInfo culture) => throw new NotSupportedException();

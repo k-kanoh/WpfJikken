@@ -34,13 +34,20 @@
                 AutoGenerateColumns="False"
                 CanUserAddRows="False"
                 CanUserSortColumns="False"
+                FontFamily="MS Gothic"
                 HeadersVisibility="Column"
                 ItemsSource="{Binding GridItems}"
                 SelectionMode="Single"
-                SelectionUnit="FullRow">
+                SelectionUnit="FullRow"
+                TextOptions.TextFormattingMode="Display">
                 <b:Interaction.Behaviors>
                     <local:DataGridCellOneClickActionBehavior />
                 </b:Interaction.Behaviors>
+                <DataGrid.Resources>
+                    <Style TargetType="DataGridColumnHeader">
+                        <Setter Property="FontFamily" Value="Segoe UI" />
+                    </Style>
+                </DataGrid.Resources>
                 <DataGrid.Columns>
                     <DataGridTextColumn
                         Width="150"
