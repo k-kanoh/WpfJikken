@@ -114,7 +114,9 @@ namespace WpfJikken1.Prop
             var editingTemplate = new DataTemplate { VisualTree = gridFactory };
 
             var cellStyle = new Style(typeof(DataGridCell));
+            cellStyle.Setters.Add(new Setter(Control.BorderThicknessProperty, new Thickness(0)));
             cellStyle.Setters.Add(new Setter(UIElement.IsEnabledProperty, new Binding($"FieldEnabled[{field.Caption}]")));
+            FrozenCellHighlight.ApplyTo(cellStyle);
 
             return new DataGridTemplateColumn
             {
@@ -152,7 +154,9 @@ namespace WpfJikken1.Prop
         private static DataGridColumn BuildRawColumn(PropField field)
         {
             var cellStyle = new Style(typeof(DataGridCell));
+            cellStyle.Setters.Add(new Setter(Control.BorderThicknessProperty, new Thickness(0)));
             cellStyle.Setters.Add(new Setter(UIElement.IsEnabledProperty, new Binding($"FieldEnabled[{field.Caption}]")));
+            FrozenCellHighlight.ApplyTo(cellStyle);
 
             var elementStyle = new Style(typeof(TextBlock));
             elementStyle.Setters.Add(new Setter(TextBlock.PaddingProperty, new Thickness(4, 0, 4, 0)));

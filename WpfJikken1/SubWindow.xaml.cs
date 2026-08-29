@@ -1,5 +1,8 @@
 ﻿using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Controls.Primitives;
 using System.Windows.Input;
+using System.Windows.Media;
 
 namespace WpfJikken1
 {
@@ -21,6 +24,46 @@ namespace WpfJikken1
                 foreach (var column in vm.Columns)
                     PropDataGrid.Columns.Add(column);
             }
+
+            PropDataGrid.ColumnReordering += PropDataGrid_ColumnReordering;
+            PropDataGrid.ColumnHeaderStyle = BuildColumnHeaderStyle();
+        }
+
+        private void PropDataGrid_ColumnReordering(object? sender, DataGridColumnReorderingEventArgs e)
+        {
+            if (e.Column.DisplayIndex < PropDataGrid.FrozenColumnCount)
+                e.Cancel = true;
+        }
+
+        // XAML上のStyle.Setter.Value内にContextMenuとClickハンドラを書くとイベント接続に失敗するため、
+        // 列ヘッダーのStyle(フォント+右クリックメニュー)自体をコードビハインドで組み立てる。
+        private Style BuildColumnHeaderStyle()
+        {
+            var freezeItem = new MenuItem { Header = "この列まで固定" };
+            freezeItem.Click += (sender, _) =>
+            {
+                var menuItem = (MenuItem)sender;
+                if (menuItem.Parent is not ContextMenu contextMenu)
+                    return;
+                if (contextMenu.PlacementTarget is not DataGridColumnHeader header)
+                    return;
+                if (header.Column is not { } column)
+                    return;
+
+                PropDataGrid.FrozenColumnCount = column.DisplayIndex + 1;
+            };
+
+            var unfreezeItem = new MenuItem { Header = "固定を解除" };
+            unfreezeItem.Click += (_, _) => PropDataGrid.FrozenColumnCount = 1;
+
+            var contextMenu = new ContextMenu();
+            contextMenu.Items.Add(freezeItem);
+            contextMenu.Items.Add(unfreezeItem);
+
+            var style = new Style(typeof(DataGridColumnHeader));
+            style.Setters.Add(new Setter(Control.FontFamilyProperty, new FontFamily("Segoe UI")));
+            style.Setters.Add(new Setter(FrameworkElement.ContextMenuProperty, contextMenu));
+            return style;
         }
 
         private void DescriptionSplitter_MouseDoubleClick(object sender, MouseButtonEventArgs e)

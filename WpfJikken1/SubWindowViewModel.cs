@@ -24,6 +24,9 @@ namespace WpfJikken1
         [ObservableProperty]
         public partial ObservableCollection<PropRow> GridItems { get; set; }
 
+        [ObservableProperty]
+        public partial int FrozenColumnCount { get; set; } = 1;
+
         public List<DataGridColumn> Columns { get; }
 
         public SubWindowViewModel(string windowTitle)

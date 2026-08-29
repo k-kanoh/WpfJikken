@@ -35,6 +35,8 @@
                 CanUserAddRows="False"
                 CanUserSortColumns="False"
                 FontFamily="MS Gothic"
+                FrozenColumnCount="{Binding FrozenColumnCount, Mode=TwoWay}"
+                GridLinesVisibility="All"
                 HeadersVisibility="Column"
                 ItemsSource="{Binding GridItems}"
                 SelectionMode="Single"
@@ -43,11 +45,6 @@
                 <b:Interaction.Behaviors>
                     <local:DataGridCellOneClickActionBehavior />
                 </b:Interaction.Behaviors>
-                <DataGrid.Resources>
-                    <Style TargetType="DataGridColumnHeader">
-                        <Setter Property="FontFamily" Value="Segoe UI" />
-                    </Style>
-                </DataGrid.Resources>
                 <DataGrid.Columns>
                     <DataGridTextColumn
                         Width="150"
@@ -56,6 +53,7 @@
                         IsReadOnly="True">
                         <DataGridTextColumn.CellStyle>
                             <Style TargetType="DataGridCell">
+                                <Setter Property="BorderThickness" Value="0" />
                                 <Setter Property="Foreground" Value="{Binding Foreground, RelativeSource={RelativeSource AncestorType=DataGrid}}" />
                                 <Setter Property="Background" Value="{Binding Background, RelativeSource={RelativeSource AncestorType=DataGrid}}" />
                             </Style>
