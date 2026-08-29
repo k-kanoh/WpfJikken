@@ -39,8 +39,8 @@
                 GridLinesVisibility="All"
                 HeadersVisibility="Column"
                 ItemsSource="{Binding GridItems}"
-                SelectionMode="Single"
-                SelectionUnit="FullRow"
+                SelectionMode="Extended"
+                SelectionUnit="Cell"
                 TextOptions.TextFormattingMode="Display">
                 <b:Interaction.Behaviors>
                     <local:DataGridCellOneClickActionBehavior />
