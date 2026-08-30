@@ -1,7 +1,8 @@
 using System.Globalization;
 using System.Windows.Data;
+using WpfJikken1.Dto;
 
-namespace WpfJikken1.Prop
+namespace WpfJikken1.Converter
 {
     public class PropListDisplayConverter : IValueConverter
     {

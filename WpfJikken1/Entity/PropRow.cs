@@ -1,7 +1,7 @@
 using System.ComponentModel;
 using WpfJikken1.DataObject;
 
-namespace WpfJikken1.Prop
+namespace WpfJikken1.Entity
 {
     public class PropRow : INotifyPropertyChanged
     {

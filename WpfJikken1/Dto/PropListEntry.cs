@@ -1,4 +1,4 @@
-namespace WpfJikken1.Prop
+namespace WpfJikken1.Dto
 {
     public class PropListEntry
     {

@@ -1,7 +1,7 @@
 using System.Windows;
 using System.Windows.Media;
 
-namespace WpfJikken1
+namespace WpfJikken1.Extensions
 {
     public static class VisualTreeHelperExtensions
     {

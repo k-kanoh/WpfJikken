@@ -1,9 +1,11 @@
 using System.Globalization;
 using System.Windows.Data;
 
-namespace WpfJikken1
+namespace WpfJikken1.Converter
 {
-    // Column.DisplayIndexとDataGrid.FrozenColumnCountを比較し、Frozenの範囲内の列かどうかを判定する。
+    /// <summary>
+    /// Column.DisplayIndexとDataGrid.FrozenColumnCountを比較し、Frozenの範囲内の列かどうかを判定する。
+    /// </summary>
     public class FrozenColumnComparer : IMultiValueConverter
     {
         public object Convert(object[] values, Type targetType, object? parameter, CultureInfo culture)

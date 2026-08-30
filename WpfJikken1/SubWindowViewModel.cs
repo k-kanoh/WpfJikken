@@ -3,7 +3,9 @@ using System.IO;
 using System.Text.Json;
 using System.Windows.Controls;
 using CommunityToolkit.Mvvm.ComponentModel;
-using WpfJikken1.Prop;
+using WpfJikken1.Dto;
+using WpfJikken1.Entity;
+using WpfJikken1.Factory;
 
 namespace WpfJikken1
 {

@@ -4,8 +4,11 @@ using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
 using System.Windows.Data;
 using System.Windows.Media;
+using WpfJikken1.Converter;
+using WpfJikken1.Dto;
+using WpfJikken1.Entity;
 
-namespace WpfJikken1.Prop
+namespace WpfJikken1.Factory
 {
     // .prop/.list/.items と生バイト列から、DataGridの行と列(DataGridTemplateColumn)を
     // 実行時に組み立てるコア処理。1つの.propに複数フィールドがある場合も想定し、
@@ -22,7 +25,6 @@ namespace WpfJikken1.Prop
 
                 foreach (var field in fields)
                 {
-                    // countが無ければreadme.txt仕様通り.listの件数がデフォルト行数。
                     var fieldRowCount = field.Count ?? list.Count;
                     var enabled = i < fieldRowCount;
                     row.FieldEnabled[field.Key] = enabled;

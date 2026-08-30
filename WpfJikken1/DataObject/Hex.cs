@@ -3,8 +3,6 @@ using System.Text.Json.Serialization;
 
 namespace WpfJikken1.DataObject
 {
-    // "0x60010"のような0xプレフィックス16進文字列を表す値オブジェクト。
-    // 文字列⇔intの変換をここに閉じ込める。
     [JsonConverter(typeof(HexJsonConverter))]
     public readonly struct Hex : IEquatable<Hex>
     {

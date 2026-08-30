@@ -1,6 +1,6 @@
 using WpfJikken1.DataObject;
 
-namespace WpfJikken1.Prop
+namespace WpfJikken1.Dto
 {
     public class PropItemEntry
     {

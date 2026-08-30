@@ -1,7 +1,7 @@
 using System.Globalization;
 using System.Windows.Data;
 
-namespace WpfJikken1
+namespace WpfJikken1.Converter
 {
     public class HexIntConverter : IValueConverter
     {
