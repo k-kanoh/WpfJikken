@@ -95,8 +95,7 @@ namespace WpfJikken1.Prop
                 {
                     Mode = BindingMode.TwoWay,
                     UpdateSourceTrigger = UpdateSourceTrigger.LostFocus,
-                    Converter = new HexIntConverter(),
-                    ConverterParameter = field.Size,
+                    Converter = new HexIntConverter(field.Size),
                 }
             );
             gridFactory.AppendChild(textFactory);
@@ -144,15 +143,7 @@ namespace WpfJikken1.Prop
 
         private static DataGridColumn BuildHexColumn(PropField field)
         {
-            return BuildRawColumn(
-                field,
-                new Binding($"[{field.Key}]")
-                {
-                    Mode = BindingMode.TwoWay,
-                    Converter = new HexIntConverter(),
-                    ConverterParameter = field.Size,
-                }
-            );
+            return BuildRawColumn(field, new Binding($"[{field.Key}]") { Mode = BindingMode.TwoWay, Converter = new HexIntConverter(field.Size) });
         }
 
         private static DataGridColumn BuildDecimalColumn(PropField field)
@@ -162,15 +153,7 @@ namespace WpfJikken1.Prop
 
         private static DataGridColumn BuildSignedDecimalColumn(PropField field)
         {
-            return BuildRawColumn(
-                field,
-                new Binding($"[{field.Key}]")
-                {
-                    Mode = BindingMode.TwoWay,
-                    Converter = new SignedDecimalIntConverter(),
-                    ConverterParameter = field.Size,
-                }
-            );
+            return BuildRawColumn(field, new Binding($"[{field.Key}]") { Mode = BindingMode.TwoWay, Converter = new SignedDecimalIntConverter(field.Size) });
         }
 
         private static DataGridColumn BuildRawColumn(PropField field, Binding binding)

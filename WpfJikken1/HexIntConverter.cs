@@ -5,11 +5,17 @@ namespace WpfJikken1
 {
     public class HexIntConverter : IValueConverter
     {
+        private readonly int _size;
+
+        public HexIntConverter(int size)
+        {
+            _size = size;
+        }
+
         public object Convert(object? value, Type targetType, object? parameter, CultureInfo culture)
         {
             var code = value is int i ? i : 0;
-            var size = parameter is int p ? p : (parameter is string s && int.TryParse(s, out var ps) ? ps : 1);
-            var digits = size * 2;
+            var digits = _size * 2;
             return $"0x{code.ToString($"X{digits}")}";
         }
 
