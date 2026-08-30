@@ -16,5 +16,7 @@ namespace WpfJikken1.Prop
         public string? Width { get; set; }
         public string? Memo { get; set; }
         public string? Master { get; set; }
+
+        public string Key => $"{Address}|{BitPattern ?? "none"}";
     }
 }

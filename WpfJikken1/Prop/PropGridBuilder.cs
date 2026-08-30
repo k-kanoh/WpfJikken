@@ -25,13 +25,13 @@ namespace WpfJikken1.Prop
                     // countが無ければreadme.txt仕様通り.listの件数がデフォルト行数。
                     var fieldRowCount = field.Count ?? list.Count;
                     var enabled = i < fieldRowCount;
-                    row.FieldEnabled[field.Caption] = enabled;
+                    row.FieldEnabled[field.Key] = enabled;
 
                     if (enabled)
                     {
                         var step = field.Step ?? field.Size;
                         var offset = field.Address + i * step;
-                        row[field.Caption] = ReadValue(data, offset, field);
+                        row[field.Key] = ReadValue(data, offset, field);
                     }
                 }
 
@@ -62,7 +62,7 @@ namespace WpfJikken1.Prop
                 columns.Add(
                     field.Display switch
                     {
-                        "list" => BuildListColumn(field, itemsByField.GetValueOrDefault(field.Caption) ?? []),
+                        "list" => BuildListColumn(field, itemsByField.GetValueOrDefault(field.Key) ?? []),
                         _ => BuildRawColumn(field),
                     }
                 );
@@ -78,7 +78,7 @@ namespace WpfJikken1.Prop
             var cellFactory = new FrameworkElementFactory(typeof(TextBlock));
             cellFactory.SetValue(TextBlock.PaddingProperty, new Thickness(4, 0, 4, 0));
             cellFactory.SetValue(TextBlock.VerticalAlignmentProperty, VerticalAlignment.Center);
-            cellFactory.SetBinding(TextBlock.TextProperty, new Binding($"[{field.Caption}]") { Converter = displayConverter, ConverterParameter = options });
+            cellFactory.SetBinding(TextBlock.TextProperty, new Binding($"[{field.Key}]") { Converter = displayConverter, ConverterParameter = options });
             var cellTemplate = new DataTemplate { VisualTree = cellFactory };
 
             var gridFactory = new FrameworkElementFactory(typeof(Grid));
@@ -90,7 +90,7 @@ namespace WpfJikken1.Prop
             comboFactory.SetValue(ComboBox.IsDropDownOpenProperty, true);
             comboFactory.SetBinding(
                 Selector.SelectedValueProperty,
-                new Binding($"[{field.Caption}]") { Mode = BindingMode.TwoWay, UpdateSourceTrigger = UpdateSourceTrigger.PropertyChanged }
+                new Binding($"[{field.Key}]") { Mode = BindingMode.TwoWay, UpdateSourceTrigger = UpdateSourceTrigger.PropertyChanged }
             );
             gridFactory.AppendChild(comboFactory);
 
@@ -101,7 +101,7 @@ namespace WpfJikken1.Prop
             textFactory.SetValue(TextBox.TextAlignmentProperty, TextAlignment.Right);
             textFactory.SetBinding(
                 TextBox.TextProperty,
-                new Binding($"[{field.Caption}]")
+                new Binding($"[{field.Key}]")
                 {
                     Mode = BindingMode.TwoWay,
                     UpdateSourceTrigger = UpdateSourceTrigger.LostFocus,
@@ -115,12 +115,14 @@ namespace WpfJikken1.Prop
 
             var cellStyle = new Style(typeof(DataGridCell));
             cellStyle.Setters.Add(new Setter(Control.BorderThicknessProperty, new Thickness(0)));
-            cellStyle.Setters.Add(new Setter(UIElement.IsEnabledProperty, new Binding($"FieldEnabled[{field.Caption}]")));
+            cellStyle.Setters.Add(new Setter(UIElement.IsEnabledProperty, new Binding($"FieldEnabled[{field.Key}]")));
             FrozenCellHighlight.ApplyTo(cellStyle);
 
             return new DataGridTemplateColumn
             {
                 Header = field.Caption,
+                // ソート機能自体は使っていないが、一意キーをDataGridColumnに持たせる場所として流用している。
+                SortMemberPath = field.Key,
                 Width = new DataGridLength(160),
                 CellTemplate = cellTemplate,
                 CellEditingTemplate = editingTemplate,
@@ -155,7 +157,7 @@ namespace WpfJikken1.Prop
         {
             var cellStyle = new Style(typeof(DataGridCell));
             cellStyle.Setters.Add(new Setter(Control.BorderThicknessProperty, new Thickness(0)));
-            cellStyle.Setters.Add(new Setter(UIElement.IsEnabledProperty, new Binding($"FieldEnabled[{field.Caption}]")));
+            cellStyle.Setters.Add(new Setter(UIElement.IsEnabledProperty, new Binding($"FieldEnabled[{field.Key}]")));
             FrozenCellHighlight.ApplyTo(cellStyle);
 
             var elementStyle = new Style(typeof(TextBlock));
@@ -171,11 +173,13 @@ namespace WpfJikken1.Prop
             return new DataGridTextColumn
             {
                 Header = field.Caption,
+                // ソート機能自体は使っていないが、一意キーをDataGridColumnに持たせる場所として流用している。
+                SortMemberPath = field.Key,
                 Width = new DataGridLength(120),
                 CellStyle = cellStyle,
                 ElementStyle = elementStyle,
                 EditingElementStyle = editingElementStyle,
-                Binding = new Binding($"[{field.Caption}]")
+                Binding = new Binding($"[{field.Key}]")
                 {
                     Mode = BindingMode.TwoWay,
                     Converter = new HexIntConverter(),

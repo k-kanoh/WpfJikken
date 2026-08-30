@@ -41,7 +41,7 @@ namespace WpfJikken1
         // キャンセル時に手動で書き戻す。
         private void DataGrid_BeginningEdit(object? sender, DataGridBeginningEditEventArgs e)
         {
-            if (e.Column.Header is not string field || e.Row.Item is not PropRow row)
+            if (e.Column.SortMemberPath is not string field || e.Row.Item is not PropRow row)
                 return;
 
             _editingItem = row;

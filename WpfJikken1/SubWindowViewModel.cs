@@ -42,7 +42,7 @@ namespace WpfJikken1
                 if (field.Master == null)
                     continue;
                 var items = LoadJson<List<PropItemEntry>>(Path.Combine(PropDir, field.Master));
-                itemsByField[field.Caption] = items.Select(PropItemOption.FromEntry).ToList();
+                itemsByField[field.Key] = items.Select(PropItemOption.FromEntry).ToList();
             }
 
             var data = File.ReadAllBytes(RomPath);
