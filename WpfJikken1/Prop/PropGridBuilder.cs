@@ -31,7 +31,7 @@ namespace WpfJikken1.Prop
                     {
                         var step = field.Step ?? field.Size;
                         var offset = field.Address + i * step;
-                        row[field.Key] = ReadValue(data, offset, field);
+                        row.Initialize(field.Key, data[offset..(offset + field.Size)]);
                     }
                 }
 
@@ -39,18 +39,6 @@ namespace WpfJikken1.Prop
             }
 
             return rows;
-        }
-
-        private static int ReadValue(byte[] data, int offset, PropField field)
-        {
-            int value = 0;
-            for (int b = 0; b < field.Size; b++)
-                value = (value << 8) | data[offset + b];
-
-            if (field.BitPattern != null)
-                value &= Convert.ToInt32(field.BitPattern, 2);
-
-            return value;
         }
 
         public static List<DataGridColumn> BuildColumns(IReadOnlyList<PropField> fields, IReadOnlyDictionary<string, List<PropItemOption>> itemsByField)
@@ -63,7 +51,9 @@ namespace WpfJikken1.Prop
                     field.Display switch
                     {
                         "list" => BuildListColumn(field, itemsByField.GetValueOrDefault(field.Key) ?? []),
-                        _ => BuildRawColumn(field),
+                        "decimal" => BuildDecimalColumn(field),
+                        "signedDecimal" => BuildSignedDecimalColumn(field),
+                        _ => BuildHexColumn(field),
                     }
                 );
             }
@@ -152,8 +142,38 @@ namespace WpfJikken1.Prop
             return new DataTemplate { VisualTree = panelFactory };
         }
 
-        // list以外のdisplay(hex/decimal/signedDecimal)は今回未検証。生値をhexで直接編集するだけの最小実装。
-        private static DataGridColumn BuildRawColumn(PropField field)
+        private static DataGridColumn BuildHexColumn(PropField field)
+        {
+            return BuildRawColumn(
+                field,
+                new Binding($"[{field.Key}]")
+                {
+                    Mode = BindingMode.TwoWay,
+                    Converter = new HexIntConverter(),
+                    ConverterParameter = field.Size,
+                }
+            );
+        }
+
+        private static DataGridColumn BuildDecimalColumn(PropField field)
+        {
+            return BuildRawColumn(field, new Binding($"[{field.Key}]") { Mode = BindingMode.TwoWay });
+        }
+
+        private static DataGridColumn BuildSignedDecimalColumn(PropField field)
+        {
+            return BuildRawColumn(
+                field,
+                new Binding($"[{field.Key}]")
+                {
+                    Mode = BindingMode.TwoWay,
+                    Converter = new SignedDecimalIntConverter(),
+                    ConverterParameter = field.Size,
+                }
+            );
+        }
+
+        private static DataGridColumn BuildRawColumn(PropField field, Binding binding)
         {
             var cellStyle = new Style(typeof(DataGridCell));
             cellStyle.Setters.Add(new Setter(Control.BorderThicknessProperty, new Thickness(0)));
@@ -179,12 +199,7 @@ namespace WpfJikken1.Prop
                 CellStyle = cellStyle,
                 ElementStyle = elementStyle,
                 EditingElementStyle = editingElementStyle,
-                Binding = new Binding($"[{field.Key}]")
-                {
-                    Mode = BindingMode.TwoWay,
-                    Converter = new HexIntConverter(),
-                    ConverterParameter = field.Size,
-                },
+                Binding = binding,
             };
         }
     }
