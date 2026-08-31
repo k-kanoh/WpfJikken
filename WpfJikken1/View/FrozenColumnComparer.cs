@@ -1,7 +1,7 @@
 using System.Globalization;
 using System.Windows.Data;
 
-namespace WpfJikken1.Converter
+namespace WpfJikken1.View
 {
     /// <summary>
     /// Column.DisplayIndexとDataGrid.FrozenColumnCountを比較し、Frozenの範囲内の列かどうかを判定する。

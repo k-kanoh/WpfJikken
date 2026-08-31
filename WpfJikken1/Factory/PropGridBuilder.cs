@@ -7,6 +7,7 @@ using System.Windows.Media;
 using WpfJikken1.Converter;
 using WpfJikken1.Dto;
 using WpfJikken1.Entity;
+using WpfJikken1.View;
 
 namespace WpfJikken1.Factory
 {
@@ -107,7 +108,9 @@ namespace WpfJikken1.Factory
             var cellStyle = new Style(typeof(DataGridCell));
             cellStyle.Setters.Add(new Setter(Control.BorderThicknessProperty, new Thickness(0)));
             cellStyle.Setters.Add(new Setter(UIElement.IsEnabledProperty, new Binding($"FieldEnabled[{field.Key}]")));
-            FrozenCellHighlight.ApplyTo(cellStyle);
+            cellStyle.Triggers.Add(FrozenCellHighlight.Create());
+            cellStyle.Triggers.Add(ModifiedCellHighlight.Create(field.Key));
+            cellStyle.Triggers.Add(SelectedCellHighlight.Create());
 
             return new DataGridTemplateColumn
             {
@@ -163,7 +166,9 @@ namespace WpfJikken1.Factory
             var cellStyle = new Style(typeof(DataGridCell));
             cellStyle.Setters.Add(new Setter(Control.BorderThicknessProperty, new Thickness(0)));
             cellStyle.Setters.Add(new Setter(UIElement.IsEnabledProperty, new Binding($"FieldEnabled[{field.Key}]")));
-            FrozenCellHighlight.ApplyTo(cellStyle);
+            cellStyle.Triggers.Add(FrozenCellHighlight.Create());
+            cellStyle.Triggers.Add(ModifiedCellHighlight.Create(field.Key));
+            cellStyle.Triggers.Add(SelectedCellHighlight.Create());
 
             var elementStyle = new Style(typeof(TextBlock));
             elementStyle.Setters.Add(new Setter(TextBlock.PaddingProperty, new Thickness(4, 0, 4, 0)));

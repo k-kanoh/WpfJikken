@@ -12,9 +12,12 @@ namespace WpfJikken1.Entity
         // countで無効(表示対象外)になったフィールドは省いてFalseのまま。CellStyleのIsEnabledから参照する。
         public Dictionary<string, bool> FieldEnabled { get; } = new();
 
+        public Dictionary<string, bool> IsModified { get; } = new();
+
         public void Initialize(string field, byte[] bytes)
         {
             _values[field] = new PropValue(bytes);
+            IsModified[field] = false;
         }
 
         public int this[string field]
@@ -23,7 +26,9 @@ namespace WpfJikken1.Entity
             set
             {
                 _values[field].SetValue(value);
+                IsModified[field] = _values[field].IsModified;
                 PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("Item[]"));
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("IsModified"));
             }
         }
 

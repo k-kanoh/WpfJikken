@@ -25,6 +25,8 @@ namespace WpfJikken1.DataObject
             }
         }
 
+        public bool IsModified => !Original.AsSpan().SequenceEqual(Modified);
+
         public void SetValue(int value)
         {
             var bytes = new byte[Modified.Length];
