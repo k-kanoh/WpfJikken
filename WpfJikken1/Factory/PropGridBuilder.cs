@@ -67,11 +67,14 @@ namespace WpfJikken1.Factory
         private static DataGridTemplateColumn BuildListColumn(PropField field, List<PropItemOption> options)
         {
             var displayConverter = new PropListDisplayConverter();
+            var namesByCode = new Dictionary<int, string>();
+            foreach (var option in options)
+                namesByCode.TryAdd(option.Code, option.Name);
 
             var cellFactory = new FrameworkElementFactory(typeof(TextBlock));
             cellFactory.SetValue(TextBlock.PaddingProperty, new Thickness(4, 0, 4, 0));
             cellFactory.SetValue(TextBlock.VerticalAlignmentProperty, VerticalAlignment.Center);
-            cellFactory.SetBinding(TextBlock.TextProperty, new Binding($"[{field.Key}]") { Converter = displayConverter, ConverterParameter = options });
+            cellFactory.SetBinding(TextBlock.TextProperty, new Binding($"[{field.Key}]") { Converter = displayConverter, ConverterParameter = namesByCode });
             var cellTemplate = new DataTemplate { VisualTree = cellFactory };
 
             var gridFactory = new FrameworkElementFactory(typeof(Grid));
