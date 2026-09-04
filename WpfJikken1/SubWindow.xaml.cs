@@ -1,8 +1,10 @@
 ﻿using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
+using System.Windows.Data;
 using System.Windows.Input;
 using System.Windows.Media;
+using WpfJikken1.View;
 
 namespace WpfJikken1
 {
@@ -23,6 +25,8 @@ namespace WpfJikken1
             {
                 foreach (var column in vm.Columns)
                     PropDataGrid.Columns.Add(column);
+
+                RowHeaderColumn.CellStyle = BuildRowHeaderCellStyle(vm);
             }
 
             PropDataGrid.ColumnReordering += PropDataGrid_ColumnReordering;
@@ -63,6 +67,26 @@ namespace WpfJikken1
             var style = new Style(typeof(DataGridColumnHeader));
             style.Setters.Add(new Setter(Control.FontFamilyProperty, new FontFamily("Segoe UI")));
             style.Setters.Add(new Setter(FrameworkElement.ContextMenuProperty, contextMenu));
+            return style;
+        }
+
+        private Style BuildRowHeaderCellStyle(SubWindowViewModel vm)
+        {
+            var style = new Style(typeof(DataGridCell));
+            style.Setters.Add(new Setter(Control.BorderThicknessProperty, new Thickness(0)));
+            style.Setters.Add(
+                new Setter(
+                    Control.ForegroundProperty,
+                    new Binding("Foreground") { RelativeSource = new RelativeSource(RelativeSourceMode.FindAncestor, typeof(DataGrid), 1) }
+                )
+            );
+            style.Setters.Add(
+                new Setter(
+                    Control.BackgroundProperty,
+                    new Binding("Background") { RelativeSource = new RelativeSource(RelativeSourceMode.FindAncestor, typeof(DataGrid), 1) }
+                )
+            );
+            style.Setters.Add(new Setter(FrameworkElement.ContextMenuProperty, RowMarkMenu.Create(vm.MarkRows, vm.UnmarkRows, vm.ClearAllMarks)));
             return style;
         }
 

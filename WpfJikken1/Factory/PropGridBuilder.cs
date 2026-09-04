@@ -112,6 +112,7 @@ namespace WpfJikken1.Factory
             cellStyle.Setters.Add(new Setter(Control.BorderThicknessProperty, new Thickness(0)));
             cellStyle.Setters.Add(new Setter(UIElement.IsEnabledProperty, new Binding($"FieldEnabled[{field.Key}]")));
             cellStyle.Triggers.Add(FrozenCellHighlight.Create());
+            cellStyle.Triggers.Add(RowMarkCellHighlight.Create());
             cellStyle.Triggers.Add(ModifiedCellHighlight.Create(field.Key));
             cellStyle.Triggers.Add(SelectedCellHighlight.Create());
 
@@ -170,6 +171,7 @@ namespace WpfJikken1.Factory
             cellStyle.Setters.Add(new Setter(Control.BorderThicknessProperty, new Thickness(0)));
             cellStyle.Setters.Add(new Setter(UIElement.IsEnabledProperty, new Binding($"FieldEnabled[{field.Key}]")));
             cellStyle.Triggers.Add(FrozenCellHighlight.Create());
+            cellStyle.Triggers.Add(RowMarkCellHighlight.Create());
             cellStyle.Triggers.Add(ModifiedCellHighlight.Create(field.Key));
             cellStyle.Triggers.Add(SelectedCellHighlight.Create());
 

@@ -1,4 +1,5 @@
 using System.ComponentModel;
+using System.Windows.Media;
 using WpfJikken1.DataObject;
 
 namespace WpfJikken1.Entity
@@ -6,6 +7,7 @@ namespace WpfJikken1.Entity
     public class PropRow : INotifyPropertyChanged
     {
         private readonly Dictionary<string, PropValue> _values = new();
+        private Brush? _markBrush;
 
         public required string Header { get; set; }
 
@@ -13,6 +15,16 @@ namespace WpfJikken1.Entity
         public Dictionary<string, bool> FieldEnabled { get; } = new();
 
         public Dictionary<string, bool> IsModified { get; } = new();
+
+        public Brush? MarkBrush
+        {
+            get => _markBrush;
+            set
+            {
+                _markBrush = value;
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(MarkBrush)));
+            }
+        }
 
         public void Initialize(string field, byte[] bytes)
         {

@@ -2,6 +2,7 @@ using System.Collections.ObjectModel;
 using System.IO;
 using System.Text.Json;
 using System.Windows.Controls;
+using System.Windows.Media;
 using CommunityToolkit.Mvvm.ComponentModel;
 using WpfJikken1.Dto;
 using WpfJikken1.Entity;
@@ -59,6 +60,25 @@ namespace WpfJikken1
         {
             var json = File.ReadAllText(path);
             return JsonSerializer.Deserialize<T>(json, JsonOptions)!;
+        }
+
+        public void MarkRows(IReadOnlyList<PropRow> rows, string colorName)
+        {
+            var brush = (Brush)new BrushConverter().ConvertFromString(colorName)!;
+            foreach (var row in rows)
+                row.MarkBrush = brush;
+        }
+
+        public void UnmarkRows(IReadOnlyList<PropRow> rows)
+        {
+            foreach (var row in rows)
+                row.MarkBrush = null;
+        }
+
+        public void ClearAllMarks()
+        {
+            foreach (var item in GridItems)
+                item.MarkBrush = null;
         }
     }
 }

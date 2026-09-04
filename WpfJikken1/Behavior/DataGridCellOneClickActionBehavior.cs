@@ -20,6 +20,7 @@ namespace WpfJikken1.Behavior
             base.OnAttached();
             AssociatedObject.PreviewMouseLeftButtonDown += DataGrid_PreviewMouseLeftButtonDown;
             AssociatedObject.PreviewMouseLeftButtonUp += DataGrid_PreviewMouseLeftButtonUp;
+            AssociatedObject.PreviewMouseRightButtonDown += DataGrid_PreviewMouseRightButtonDown;
             AssociatedObject.PreviewMouseMove += DataGrid_PreviewMouseMove;
             AssociatedObject.PreviewMouseDoubleClick += DataGrid_PreviewMouseDoubleClick;
             AssociatedObject.BeginningEdit += DataGrid_BeginningEdit;
@@ -30,6 +31,7 @@ namespace WpfJikken1.Behavior
         {
             AssociatedObject.PreviewMouseLeftButtonDown -= DataGrid_PreviewMouseLeftButtonDown;
             AssociatedObject.PreviewMouseLeftButtonUp -= DataGrid_PreviewMouseLeftButtonUp;
+            AssociatedObject.PreviewMouseRightButtonDown -= DataGrid_PreviewMouseRightButtonDown;
             AssociatedObject.PreviewMouseMove -= DataGrid_PreviewMouseMove;
             AssociatedObject.PreviewMouseDoubleClick -= DataGrid_PreviewMouseDoubleClick;
             AssociatedObject.BeginningEdit -= DataGrid_BeginningEdit;
@@ -65,10 +67,11 @@ namespace WpfJikken1.Behavior
             if (e.OriginalSource is not FrameworkElement element)
                 return;
 
-            var dataGrid = AssociatedObject;
             var cell = element.GetVisualAncestor<DataGridCell>();
             if (cell == null)
                 return;
+
+            var dataGrid = AssociatedObject;
 
             if (!cell.IsEditing)
             {
@@ -95,10 +98,11 @@ namespace WpfJikken1.Behavior
             if (e.OriginalSource is not FrameworkElement element)
                 return;
 
-            var dataGrid = AssociatedObject;
             var cell = element.GetVisualAncestor<DataGridCell>();
             if (cell == null)
                 return;
+
+            var dataGrid = AssociatedObject;
 
             // 疑似行ヘッダー列(先頭列)のクリックは、本来のDataGrid行ヘッダーと同じくその行全体を選択する。
             // cell.Focus()がCurrentCellの更新・編集中セルのコミットを内部で行うため、
@@ -156,6 +160,31 @@ namespace WpfJikken1.Behavior
             }
         }
 
+        private void DataGrid_PreviewMouseRightButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            if (e.OriginalSource is not FrameworkElement element)
+                return;
+
+            var cell = element.GetVisualAncestor<DataGridCell>();
+            if (cell == null)
+                return;
+
+            var dataGrid = AssociatedObject;
+
+            if (cell.Column == dataGrid.Columns[0])
+            {
+                var row = DataGridRow.GetRowContainingElement(cell);
+                if (row == null)
+                    return;
+
+                cell.Focus();
+
+                var isRowFullySelected = dataGrid.SelectedCells.Count(c => c.Item == row.Item) == dataGrid.Columns.Count;
+                if (!isRowFullySelected)
+                    SelectRowRange(dataGrid, row, row);
+            }
+        }
+
         private void DataGrid_PreviewMouseMove(object sender, MouseEventArgs e)
         {
             if (_rowHeaderDragAnchor == null)
@@ -177,7 +206,6 @@ namespace WpfJikken1.Behavior
                 SelectRowRange(dataGrid, _rowHeaderDragAnchor, row);
         }
 
-        // fromRow・toRow(両端含む)の間にある全行・全セルを選択する。
         private static void SelectRowRange(DataGrid dataGrid, DataGridRow fromRow, DataGridRow toRow)
         {
             int fromIndex = dataGrid.Items.IndexOf(fromRow.Item);
