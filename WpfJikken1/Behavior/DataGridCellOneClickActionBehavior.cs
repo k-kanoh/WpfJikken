@@ -1,5 +1,6 @@
 ﻿using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Data;
 using System.Windows.Input;
 using Microsoft.Xaml.Behaviors;
 using WpfJikken1.Entity;
@@ -56,6 +57,12 @@ namespace WpfJikken1.Behavior
         {
             if (e.EditAction == DataGridEditAction.Cancel && _editingItem != null && _editingFieldKey != null)
                 _editingItem[_editingFieldKey] = _originalValue!.Value;
+
+            // 同じ行内で別セルへ移動しただけだとTextBox.TextのUpdateSourceTrigger=LostFocusが
+            // 実際には発火せず、値がPropRowへ反映されないまま編集が終わってしまうため、
+            // ここで明示的にバインディングソースへ反映させる。
+            if (e.EditAction == DataGridEditAction.Commit && e.EditingElement is TextBox textBox)
+                BindingOperations.GetBindingExpression(textBox, TextBox.TextProperty)?.UpdateSource();
 
             _editingItem = null;
             _editingFieldKey = null;
